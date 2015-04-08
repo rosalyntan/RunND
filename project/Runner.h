@@ -11,6 +11,7 @@ class Runner {
 		Runner();
 		~Runner();
 		void jump();
+//		void duck();
 	private:
 		int speed;
 };

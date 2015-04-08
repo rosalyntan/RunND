@@ -10,10 +10,11 @@ class Object {
 	public:
 		Object();
 		~Object();
+		void setY(int);
+		virtual void effect() = 0;
 	private:
-		int xPos;
+		int xPos = 400;
 		int yPos;
-		int objectType;
 };
 
 #endif

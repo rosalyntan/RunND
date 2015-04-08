@@ -130,35 +130,35 @@ bool loadMedia() {
 	bool success = true;
 
 	//Load default surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("press.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("Background_default.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
 		cout << "Failed to load default image." << endl;
 		success = false;
 	}
 
 	//Load up surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("up.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("hello.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL) {
 		cout << "Failed to load up image." << endl;
 		success = false;
 	}
 
 	//Load down surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("down.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("Background_default.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL) {
 		cout << "Failed to load down image." << endl;
 		success = false;
 	}
 
 	//Load left surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("left.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("hello.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL) {
 		cout << "Failed to load left image." << endl;
 		success = false;
 	}
 
 	//Load right surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("right.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("Background_default.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL) {
 		cout << "Failed to load right image." << endl;
 		success = false;

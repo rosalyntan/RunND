@@ -14,7 +14,7 @@ class Window {
 	private:
 		int level;
 		int points;
-		float time;
+		int direction; // 0 is straight, -1 is left, 1 is right, 2 is both
 };
 
 #endif
