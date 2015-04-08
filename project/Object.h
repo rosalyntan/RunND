@@ -11,7 +11,9 @@ class Object {
 		Object();
 		~Object();
 	private:
-		int location;
+		int xPos;
+		int yPos;
+		int objectType;
 };
 
 #endif

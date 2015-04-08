@@ -9,9 +9,12 @@ using namespace std;
 class Window {
 	public:
 		Window();
-		void turn(int);
+		void left();
+		void right();
 	private:
 		int level;
+		int points;
+		float time;
 };
 
 #endif
