@@ -147,7 +147,7 @@ bool init() {
 }
 
 bool loadMedia() {
-	Loading success flag
+	//Loading success flag
 	bool success = true;
 
 	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
