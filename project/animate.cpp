@@ -147,7 +147,11 @@ bool init() {
 }
 
 bool loadMedia() {
+<<<<<<< HEAD
 	// Loading success flag
+=======
+	//Loading success flag
+>>>>>>> b41df30dc00b5c7fb5b64054643857eb3cead5d9
 	bool success = true;
 
 	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
