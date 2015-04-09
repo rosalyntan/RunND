@@ -1,8 +1,28 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "LTexture.h"
 using namespace std;
+
+//LazyFoo Tutorial 10
+
+//SDL_Window* gWindow = NULL;
+SDL_Renderer* gRenderer = NULL;
+
+//Texture wrapper class
+class LTexture {
+	public:
+		LTexture();
+		~LTexture();
+		bool loadFromFile(string path);
+		void free();
+		void render(int x, int y, SDL_Rect* clip = NULL);
+		int getWidth();
+		int getHeight();
+	private:
+		SDL_Texture* mTexture;
+		int mWidth;
+		int mHeight;
+};
 
 LTexture::LTexture() {
 	mTexture = NULL;

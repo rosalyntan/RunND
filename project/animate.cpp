@@ -40,7 +40,7 @@ const int BACKGROUND_ANIMATION_FRAMES = 4;
 SDL_Rect gSpriteClips[BACKGROUND_ANIMATION_FRAMES];
 LTexture gSpriteSheetTexture;
 
-SDL_Renderer* gRenderer = NULL;
+//SDL_Renderer* gRenderer = NULL;
 
 int main(int argc, char* argv[]) {
 	//Start up SDL and create window
@@ -150,7 +150,7 @@ bool loadMedia() {
 	//Loading success flag
 	bool success = true;
 
-	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+//	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if(gRenderer == NULL) {
 		cout << "Renderer could not be created. SDL Error: " << SDL_GetError() << endl;
 		success = false;
