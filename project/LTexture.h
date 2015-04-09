@@ -21,8 +21,8 @@ class LTexture {
 		int mHeight;
 };
 
-//SDL_Window* gWindow = NULL;
-SDL_Renderer* gRenderer = NULL;
+extern SDL_Window* gWindow;
+extern SDL_Renderer* gRenderer;
 
 LTexture::LTexture() {
 	mTexture = NULL;
