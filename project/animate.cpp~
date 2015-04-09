@@ -147,10 +147,10 @@ bool init() {
 }
 
 bool loadMedia() {
-	//Loading success flag
+	Loading success flag
 	bool success = true;
 
-//	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
 	if(gRenderer == NULL) {
 		cout << "Renderer could not be created. SDL Error: " << SDL_GetError() << endl;
 		success = false;
