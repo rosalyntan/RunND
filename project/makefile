@@ -15,4 +15,4 @@ $(MAIN): $(MAIN).cpp
 #	$(CMP) -c $(FUNC).cpp $(FLAGS)
 
 clean:
-	rm *.o $(MAIN)
+	rm *.o $(MAIN) *~
