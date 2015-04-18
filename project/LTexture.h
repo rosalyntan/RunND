@@ -35,7 +35,8 @@ LTexture::~LTexture() {
 }
 
 bool LTexture::loadFromFile(string path) {
-	free();
+	cout << "loadFromFile() accessed" << endl;  //hits this line, goes into free
+	free();  //commented out gives Bus error (core dumped)
 	SDL_Texture* newTexture = NULL;
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == NULL) {
@@ -52,17 +53,21 @@ bool LTexture::loadFromFile(string path) {
 			mHeight = loadedSurface->h;
 		}
 		SDL_FreeSurface(loadedSurface);
+		cout << "free loaded surface" << endl;
 	}
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
 
 void LTexture::free() {
-	if(mTexture != NULL) {
+	cout << "free() accessed" << endl; //hits this
+	if(mTexture != NULL) { //comment out this if statement and it still says double free, but it does access the lower lines
+		cout << "free() if statement accessed" << endl; //doesn't get into if statement, this line displayed only once (not sure why/how that time was different)
 		SDL_DestroyTexture(mTexture);
 		mTexture = NULL;
 		mWidth = 0;
 		mHeight = 0;
+		//cout << "end of deleted if" << endl;
 		
 	}
 }

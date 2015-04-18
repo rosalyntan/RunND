@@ -4,8 +4,8 @@
 #include "LTexture.h"
 using namespace std;
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH = 200;
+const int SCREEN_HEIGHT = 150;
 
 // Key press surfaces constants
 enum KeyPressSurfaces {
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 			int frame = 0;
 
 			//Set default current surface
-//			gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
+			//gCurrentSurface = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 			//While application is running
 			while(!quit) {
 				//Handle events on queue
@@ -102,10 +102,10 @@ int main(int argc, char* argv[]) {
 						}
 					}
 				}
-				//Apply the image
+				/*//Apply the image
 				SDL_BlitSurface(gCurrentSurface, NULL, gScreenSurface, NULL);
 				//Update the surface
-				SDL_UpdateWindowSurface(gWindow);	
+				SDL_UpdateWindowSurface(gWindow);*/
 			}
 		}
 	}
@@ -164,23 +164,23 @@ bool loadMedia() {
 	else {
 		gSpriteClips[0].x = 0;
 		gSpriteClips[0].y = 0;
-		gSpriteClips[0].w = 64;
-		gSpriteClips[0].h = 205;
+		gSpriteClips[0].w = 200;
+		gSpriteClips[0].h = 150;
 
-		gSpriteClips[1].x = 64;
-		gSpriteClips[1].y = 0;
-		gSpriteClips[1].w = 64;
-		gSpriteClips[1].h = 205;
+		gSpriteClips[1].x = 200;
+		gSpriteClips[1].y = 150;
+		gSpriteClips[1].w = 200;
+		gSpriteClips[1].h = 150;
 
-		gSpriteClips[2].x = 128;
-		gSpriteClips[2].y = 0;
-		gSpriteClips[2].w = 64;
-		gSpriteClips[2].h = 205;
+		gSpriteClips[2].x = 400;
+		gSpriteClips[2].y = 300;
+		gSpriteClips[2].w = 200;
+		gSpriteClips[2].h = 150;
 
-		gSpriteClips[3].x = 196;
-		gSpriteClips[3].y = 0;
-		gSpriteClips[3].w = 64;
-		gSpriteClips[3].h = 205;
+		gSpriteClips[3].x = 600;
+		gSpriteClips[3].y = 450;
+		gSpriteClips[3].w = 200;
+		gSpriteClips[3].h = 150;
 	}
 /*
 	//Load default surface
@@ -221,9 +221,9 @@ bool loadMedia() {
 }
 
 void close() {
-	//Deallocate surface
+/*	//Deallocate surface
 	SDL_FreeSurface(gCurrentSurface);
-	gCurrentSurface = NULL;
+	gCurrentSurface = NULL;*/
 
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
