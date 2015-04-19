@@ -19,7 +19,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Animation
-const int BACKGROUND_ANIMATION_FRAMES = 4;
+const int BACKGROUND_ANIMATION_FRAMES = 13;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
 SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
 					//sprite jumps when up arrow is pressed
 					if (direction == 1) {						
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 13*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 						jump++;
 						if (jump > 4) {
 							direction = 0;
@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 						}
 					}
 					else
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
 					//need 2 different sets of frames
 					SDL_RenderPresent(gRenderer);
@@ -142,30 +142,79 @@ bool loadMedia() {
 	}
 
 	//Load background sprite sheet texture
-	if(!gSpriteSheetTexture.loadFromFile("Background_default.bmp", gRenderer)) {
+	if(!gSpriteSheetTexture.loadFromFile("Background_sprite.bmp", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}
 	else {
-		gBackClips[0].x = 200;
+		//straight
+		gBackClips[0].x = 0;
 		gBackClips[0].y = 0;
 		gBackClips[0].w = 400;
 		gBackClips[0].h = 600;
 
-		gBackClips[1].x = 200;
+		//both turns
+		gBackClips[1].x = 400;
 		gBackClips[1].y = 0;
 		gBackClips[1].w = 400;
 		gBackClips[1].h = 600;
 
-		gBackClips[2].x = 200;
+		gBackClips[2].x = 800;
 		gBackClips[2].y = 0;
 		gBackClips[2].w = 400;
 		gBackClips[2].h = 600;
 
-		gBackClips[3].x = 200;
+		gBackClips[3].x = 1200;
 		gBackClips[3].y = 0;
 		gBackClips[3].w = 400;
 		gBackClips[3].h = 600;
+
+		gBackClips[4].x = 1600;
+		gBackClips[4].y = 0;
+		gBackClips[4].w = 400;
+		gBackClips[4].h = 600;
+
+		//left turn
+		gBackClips[5].x = 400;
+		gBackClips[5].y = 600;
+		gBackClips[5].w = 400;
+		gBackClips[5].h = 600;
+
+		gBackClips[6].x = 800;
+		gBackClips[6].y = 600;
+		gBackClips[6].w = 400;
+		gBackClips[6].h = 600;
+
+		gBackClips[7].x = 1200;
+		gBackClips[7].y = 600;
+		gBackClips[7].w = 400;
+		gBackClips[7].h = 600;
+
+		gBackClips[8].x = 1600;
+		gBackClips[8].y = 600;
+		gBackClips[8].w = 400;
+		gBackClips[8].h = 600;
+
+		//left turn
+		gBackClips[9].x = 400;
+		gBackClips[9].y = 1200;
+		gBackClips[9].w = 400;
+		gBackClips[9].h = 600;
+
+		gBackClips[10].x = 800;
+		gBackClips[10].y = 1200;
+		gBackClips[10].w = 400;
+		gBackClips[10].h = 600;
+
+		gBackClips[11].x = 1200;
+		gBackClips[11].y = 1200;
+		gBackClips[11].w = 400;
+		gBackClips[11].h = 600;
+
+		gBackClips[12].x = 1600;
+		gBackClips[12].y = 1200;
+		gBackClips[12].w = 400;
+		gBackClips[12].h = 600;
 	}
 
 	//Load character sprite sheet texture
