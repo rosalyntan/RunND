@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 
 			//Event handler
 			SDL_Event e;
-			int frame = 0;
+			int frameBack = 0;
 
 			//While application is running
 			while(!quit) {
@@ -68,16 +68,16 @@ int main(int argc, char* argv[]) {
 						quit = true;
 					}
 					else {
-						SDL_Rect* currentClipBack = &gBackClips[frame / 4];
-						SDL_Rect* currentClipChar = &gCharClips[frame / 4];
+						SDL_Rect* currentClipBack = &gBackClips[frame / BACKGROUND_ANIMATION_FRAMES];
+						SDL_Rect* currentClipChar = &gCharClips[frame / CHARACTER_ANIMATION_FRAMES];
 						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, (SCREEN_HEIGHT - currentClipChar->h)/4, currentClipChar, gRenderer);
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
 
 						//need 2 different sets of frames
 						SDL_RenderPresent(gRenderer);//loadFrom
-						++frame;
-						if(frame/4 >= BACKGROUND_ANIMATION_FRAMES) {
-							frame = 0;
+						++frameBack;
+						if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
+							frameBack = 0;
 						}
 					}
 				}
@@ -155,7 +155,7 @@ bool loadMedia() {
 	}
 
 	//Load character sprite sheet texture
-	if(!gCharacterTexture.loadFromFile("Character_Sprite.bmp", gRenderer)) {
+	if(!gCharacterTexture.loadFromFile("Character_Sprite.jpg", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}

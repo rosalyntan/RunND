@@ -7,16 +7,6 @@ using namespace std;
 const int SCREEN_WIDTH = 400;
 const int SCREEN_HEIGHT = 600;
 
-// Key press surfaces constants
-enum KeyPressSurfaces {
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
-};
-
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -24,16 +14,12 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
-//The window we'll be rendering to
+//Initialize window and renderer
 SDL_Window* gWindow = NULL;
-//Renderer we are using
 SDL_Renderer* gRenderer = NULL;
-//The images that correspond to a keypress
-SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
-//Current displayed image
-SDL_Surface* gCurrentSurface = NULL;
 
 //Animation
+Uint32 startTime = 0; //animation start time
 const int BACKGROUND_ANIMATION_FRAMES = 4;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
@@ -57,27 +43,33 @@ int main(int argc, char* argv[]) {
 
 			//Event handler
 			SDL_Event e;
-			int frame = 0;
+			int frameBack = 0;
+		 	int frameChar = 0;
 
 			//While application is running
 			while(!quit) {
 				//Handle events on queue
-				while(SDL_PollEvent(&e)) {
+				while(SDL_GetTicks()) {
 					//User requests quit
 					if(e.type == SDL_QUIT) {
 						quit = true;
 					}
 					else {
-						SDL_Rect* currentClipBack = &gBackClips[frame / 4];
-						SDL_Rect* currentClipChar = &gCharClips[frame / 4];
+						SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
+						SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, (SCREEN_HEIGHT - currentClipChar->h)/2, currentClipChar, gRenderer);
+						//for jumping sprite, add an if statement to bring the sprite up higher
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
 
 						//need 2 different sets of frames
-						SDL_RenderPresent(gRenderer);//loadFrom
-						++frame;
-						if(frame/4 >= BACKGROUND_ANIMATION_FRAMES) {
-							frame = 0;
+						SDL_RenderPresent(gRenderer);
+						++frameBack;
+						if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
+							frameBack = 0;
+						}
+						++frameChar;
+						if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
+							frameChar = 0;
 						}
 					}
 				}
