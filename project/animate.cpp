@@ -44,19 +44,45 @@ int main(int argc, char* argv[]) {
 			SDL_Event e;
 			int frameBack = 0;
 		 	int frameChar = 0;
+			int direction = 0;
+			int jump = 0;
 
 			//While application is running
-			while(!quit) { //currently must force quit for the window to close, find a fix later?
-				//User requests quit
-				if(e.type == SDL_QUIT) {
-					quit = true;
+			while(!quit) { 
+				if (SDL_PollEvent(&e)) {
+					if(e.type == SDL_KEYDOWN) {
+						switch(e.key.keysym.sym) {
+							case SDLK_UP: //jump
+								direction = 1;
+								break;
+							case SDLK_LEFT: //turn left
+								direction = 2;
+								break;
+							case SDLK_RIGHT: //turn right
+								direction = 3;
+								break;
+						}
+					}
+					//User requests quit
+					else if(e.type == SDL_QUIT) {
+						quit = true;
+					}
 				}
-				else {
+				if(!quit) {
 					SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
 					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-					//for jumping sprite, add an if statement to bring the sprite up higher
-					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+					//sprite jumps when up arrow is pressed
+					if (direction == 1) {						
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 13*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+						jump++;
+						if (jump > 4) {
+							direction = 0;
+							jump = 0;
+						}
+					}
+					else
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
 
 					//need 2 different sets of frames
 					SDL_RenderPresent(gRenderer);
