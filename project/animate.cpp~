@@ -7,16 +7,6 @@ using namespace std;
 const int SCREEN_WIDTH = 400;
 const int SCREEN_HEIGHT = 600;
 
-// Key press surfaces constants
-enum KeyPressSurfaces {
-	KEY_PRESS_SURFACE_DEFAULT,
-	KEY_PRESS_SURFACE_UP,
-	KEY_PRESS_SURFACE_DOWN,
-	KEY_PRESS_SURFACE_LEFT,
-	KEY_PRESS_SURFACE_RIGHT,
-	KEY_PRESS_SURFACE_TOTAL
-};
-
 //Starts up SDL and creates window
 bool init();
 //Loads media
@@ -24,14 +14,9 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
-//The window we'll be rendering to
+//Initialize window and renderer
 SDL_Window* gWindow = NULL;
-//Renderer we are using
 SDL_Renderer* gRenderer = NULL;
-//The images that correspond to a keypress
-SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
-//Current displayed image
-SDL_Surface* gCurrentSurface = NULL;
 
 //Animation
 const int BACKGROUND_ANIMATION_FRAMES = 4;
@@ -58,27 +43,30 @@ int main(int argc, char* argv[]) {
 			//Event handler
 			SDL_Event e;
 			int frameBack = 0;
+		 	int frameChar = 0;
 
 			//While application is running
 			while(!quit) {
-				//Handle events on queue
-				while(SDL_PollEvent(&e)) {
-					//User requests quit
-					if(e.type == SDL_QUIT) {
-						quit = true;
-					}
-					else {
-						SDL_Rect* currentClipBack = &gBackClips[frame / BACKGROUND_ANIMATION_FRAMES];
-						SDL_Rect* currentClipChar = &gCharClips[frame / CHARACTER_ANIMATION_FRAMES];
-						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+				//User requests quit
+				if(e.type == SDL_QUIT) {
+					quit = true;
+				}
+				else {
+					SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
+					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
+					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+					//for jumping sprite, add an if statement to bring the sprite up higher
+					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
 
-						//need 2 different sets of frames
-						SDL_RenderPresent(gRenderer);//loadFrom
-						++frameBack;
-						if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
-							frameBack = 0;
-						}
+					//need 2 different sets of frames
+					SDL_RenderPresent(gRenderer);
+					++frameBack;
+					if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
+						frameBack = 0;
+					}
+					++frameChar;
+					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
+						frameChar = 0;
 					}
 				}
 			}
@@ -155,7 +143,7 @@ bool loadMedia() {
 	}
 
 	//Load character sprite sheet texture
-	if(!gCharacterTexture.loadFromFile("Character_Sprite.jpg", gRenderer)) {
+	if(!gCharacterTexture.loadFromFile("Character_Sprite.bmp", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}

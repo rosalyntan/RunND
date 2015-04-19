@@ -19,7 +19,6 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Animation
-Uint32 startTime = 0; //animation start time
 const int BACKGROUND_ANIMATION_FRAMES = 4;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
@@ -47,30 +46,27 @@ int main(int argc, char* argv[]) {
 		 	int frameChar = 0;
 
 			//While application is running
-			while(!quit) {
-				//Handle events on queue
-				while(SDL_GetTicks()) {
-					//User requests quit
-					if(e.type == SDL_QUIT) {
-						quit = true;
-					}
-					else {
-						SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
-						SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
-						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-						//for jumping sprite, add an if statement to bring the sprite up higher
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
+			while(!quit) { //currently must force quit for the window to close, find a fix later?
+				//User requests quit
+				if(e.type == SDL_QUIT) {
+					quit = true;
+				}
+				else {
+					SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
+					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
+					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+					//for jumping sprite, add an if statement to bring the sprite up higher
+					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 15*(SCREEN_HEIGHT - currentClipChar->h)/16, currentClipChar, gRenderer);
 
-						//need 2 different sets of frames
-						SDL_RenderPresent(gRenderer);
-						++frameBack;
-						if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
-							frameBack = 0;
-						}
-						++frameChar;
-						if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
-							frameChar = 0;
-						}
+					//need 2 different sets of frames
+					SDL_RenderPresent(gRenderer);
+					++frameBack;
+					if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
+						frameBack = 0;
+					}
+					++frameChar;
+					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
+						frameChar = 0;
 					}
 				}
 			}
