@@ -10,9 +10,9 @@ class LTexture {
 	public:
 		LTexture();
 		~LTexture();
-		bool loadFromFile(string path);
+		bool loadFromFile(string path, SDL_Renderer* gRenderer);
 		void free();
-		void render(int x, int y, SDL_Rect* clip = NULL);
+		void render(int x, int y, SDL_Rect* clip = NULL, SDL_Renderer* renderer=NULL);
 		int getWidth();
 		int getHeight();
 	private:
@@ -21,8 +21,8 @@ class LTexture {
 		int mHeight;
 };
 
-extern SDL_Window* gWindow;
-extern SDL_Renderer* gRenderer;
+//extern SDL_Window* gWindow;
+//extern SDL_Renderer* gRenderer;
 
 LTexture::LTexture() {
 	mTexture = NULL;
@@ -34,7 +34,7 @@ LTexture::~LTexture() {
 	free();
 }
 
-bool LTexture::loadFromFile(string path) {
+bool LTexture::loadFromFile(string path, SDL_Renderer* gRenderer) {
 	cout << "loadFromFile() accessed" << endl;  //hits this line, goes into free
 	free();  //commented out gives Bus error (core dumped)
 	SDL_Texture* newTexture = NULL;
@@ -53,6 +53,7 @@ bool LTexture::loadFromFile(string path) {
 			mHeight = loadedSurface->h;
 		}
 		SDL_FreeSurface(loadedSurface);
+		loadedSurface = NULL;
 		cout << "free loaded surface" << endl;
 	}
 	mTexture = newTexture;
@@ -72,13 +73,13 @@ void LTexture::free() {
 	}
 }
 
-void LTexture::render(int x, int y, SDL_Rect* clip) {
+void LTexture::render(int x, int y, SDL_Rect* clip, SDL_Renderer* renderer) {
 	SDL_Rect renderQuad = {x, y, mWidth, mHeight};
 	if(clip != NULL) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
-	SDL_RenderCopy(gRenderer, mTexture, clip, &renderQuad);
+	SDL_RenderCopy(renderer, mTexture, clip, &renderQuad);
 }
 
 int LTexture::getWidth() {

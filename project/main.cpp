@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "LTexture.h"
 using namespace std;
 
 const int SCREEN_WIDTH = 800;
@@ -27,6 +28,7 @@ SDL_Surface* loadSurface(string path);
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
+SDL_Renderer* gRenderer = NULL;
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
 //The images that correspond to a keypress
@@ -45,6 +47,14 @@ int main(int argc, char* argv[]) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
+			/*LTexture gCharacterTexture;
+			gCharacterTexture.loadFromFile("Character_Sprite.bmp", gRenderer);
+			SDL_Rect clip;
+			clip.x = 0;
+			clip.y = 0;
+			clip.w = 20;
+			clip.h = 20;
+			gCharacterTexture.render(30,30, &clip, gRenderer);*/
 			//Main loop flag
 			bool quit = false;
 			//Event handler
@@ -121,6 +131,14 @@ bool init() {
 				gScreenSurface = SDL_GetWindowSurface(gWindow);
 			}
 		}
+		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		if(gRenderer == NULL) {
+			cout << "Renderer could not be created. SDL Error: " << SDL_GetError() << endl;
+			success = false;
+		}else{
+			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+		}
+		cout << "initialized successfully\n";
 	}
 	return success;
 }
@@ -174,6 +192,10 @@ void close() {
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
+
+	//destroy renderer
+	SDL_DestroyRenderer(gRenderer);
+	gRenderer = NULL;
 
 	//Quit SDL subsystems
 	SDL_Quit();

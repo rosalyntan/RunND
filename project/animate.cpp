@@ -4,8 +4,8 @@
 #include "LTexture.h"
 using namespace std;
 
-const int SCREEN_WIDTH = 200;
-const int SCREEN_HEIGHT = 150;
+const int SCREEN_WIDTH = 400;
+const int SCREEN_HEIGHT = 600;
 
 // Key press surfaces constants
 enum KeyPressSurfaces {
@@ -23,13 +23,9 @@ bool init();
 bool loadMedia();
 //Frees media and shuts down SDL
 void close();
-//Loads individual image
-SDL_Surface* loadSurface(string path);
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
 //The images that correspond to a keypress
 SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 //Current displayed image
@@ -37,8 +33,11 @@ SDL_Surface* gCurrentSurface = NULL;
 
 //Animation
 const int BACKGROUND_ANIMATION_FRAMES = 4;
-SDL_Rect gSpriteClips[BACKGROUND_ANIMATION_FRAMES];
+const int CHARACTER_ANIMATION_FRAMES = 4;
+SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
+SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
 LTexture gSpriteSheetTexture;
+LTexture gCharacterTexture;
 
 SDL_Renderer* gRenderer = NULL;
 
@@ -92,10 +91,13 @@ int main(int argc, char* argv[]) {
 						}
 					}*/
 					else {
-						SDL_Rect* currentClip = &gSpriteClips[frame / 4];
-						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClip->w)/2, (SCREEN_HEIGHT - currentClip->h)/2, currentClip);
+						SDL_Rect* currentClipBack = &gBackClips[frame / 4];
+						SDL_Rect* currentClipChar = &gCharClips[frame / 4];
+						gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack,gRenderer);
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, (SCREEN_HEIGHT - currentClipChar->h)/2, currentClipChar,gRenderer);
 
-						SDL_RenderPresent(gRenderer);
+						//need 2 different sets of frames
+						SDL_RenderPresent(gRenderer);//loadFrom
 						++frame;
 						if(frame/4 >= BACKGROUND_ANIMATION_FRAMES) {
 							frame = 0;
@@ -139,7 +141,7 @@ bool init() {
 			}
 			else {
 				// Get window surface
-				gScreenSurface = SDL_GetWindowSurface(gWindow);
+				//gScreenSurface = SDL_GetWindowSurface(gWindow);
 			}
 		}
 	}
@@ -156,31 +158,58 @@ bool loadMedia() {
 		success = false;
 	}
 
-	//Load sprite sheet texture
-	if(!gSpriteSheetTexture.loadFromFile("Background_default.bmp")) {
+	//Load background sprite sheet texture
+	if(!gSpriteSheetTexture.loadFromFile("Background_default.bmp",gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}
 	else {
-		gSpriteClips[0].x = 0;
-		gSpriteClips[0].y = 0;
-		gSpriteClips[0].w = 200;
-		gSpriteClips[0].h = 150;
+		gBackClips[0].x = 200;
+		gBackClips[0].y = 0;
+		gBackClips[0].w = 400;
+		gBackClips[0].h = 600;
 
-		gSpriteClips[1].x = 200;
-		gSpriteClips[1].y = 150;
-		gSpriteClips[1].w = 200;
-		gSpriteClips[1].h = 150;
+		gBackClips[1].x = 200;
+		gBackClips[1].y = 0;
+		gBackClips[1].w = 400;
+		gBackClips[1].h = 600;
 
-		gSpriteClips[2].x = 400;
-		gSpriteClips[2].y = 300;
-		gSpriteClips[2].w = 200;
-		gSpriteClips[2].h = 150;
+		gBackClips[2].x = 200;
+		gBackClips[2].y = 0;
+		gBackClips[2].w = 400;
+		gBackClips[2].h = 600;
 
-		gSpriteClips[3].x = 600;
-		gSpriteClips[3].y = 450;
-		gSpriteClips[3].w = 200;
-		gSpriteClips[3].h = 150;
+		gBackClips[3].x = 200;
+		gBackClips[3].y = 0;
+		gBackClips[3].w = 400;
+		gBackClips[3].h = 600;
+	}
+
+	//Load character sprite sheet texture
+	if(!gCharacterTexture.loadFromFile("Character_Sprite.bmp",gRenderer)) {
+		cout << "Failed to load animation texture" << endl;
+		success = false;
+	}
+	else {
+		gCharClips[0].x = 0;
+		gCharClips[0].y = 0;
+		gCharClips[0].w = 80;
+		gCharClips[0].h = 150;
+
+		gCharClips[1].x = 150;
+		gCharClips[1].y = 0;
+		gCharClips[1].w = 80;
+		gCharClips[1].h = 150;
+
+		gCharClips[2].x = 300;
+		gCharClips[2].y = 0;
+		gCharClips[2].w = 80;
+		gCharClips[2].h = 150;
+
+		gCharClips[3].x = 450;
+		gCharClips[3].y = 0;
+		gCharClips[3].w = 80;
+		gCharClips[3].h = 150;
 	}
 /*
 	//Load default surface
@@ -225,14 +254,21 @@ void close() {
 	SDL_FreeSurface(gCurrentSurface);
 	gCurrentSurface = NULL;*/
 
+	gSpriteSheetTexture.free(); //
+	gCharacterTexture.free(); //
+
+	SDL_DestroyRenderer(gRenderer); //
+	gRenderer=NULL; //
+
 	//Destroy window
 	SDL_DestroyWindow(gWindow);
 	gWindow = NULL;
 
 	//Quit SDL subsystems
+	IMG_Quit(); //
 	SDL_Quit();
 }
-
+/*
 SDL_Surface* loadSurface(string path) {
 	// The final optimized image
 	SDL_Surface* optimizedSurface = NULL;
@@ -252,4 +288,4 @@ SDL_Surface* loadSurface(string path) {
 		SDL_FreeSurface(loadedSurface);
 	}
 	return optimizedSurface;
-}
+}*/
