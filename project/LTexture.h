@@ -3,8 +3,6 @@
 #include <SDL2/SDL_image.h>
 using namespace std;
 
-//LazyFoo Tutorial 10
-
 //Texture wrapper class
 class LTexture {
 	public:
@@ -21,9 +19,6 @@ class LTexture {
 		int mHeight;
 };
 
-//extern SDL_Window* gWindow;
-//extern SDL_Renderer* gRenderer;
-
 LTexture::LTexture() {
 	mTexture = NULL;
 	mWidth = 0;
@@ -35,8 +30,7 @@ LTexture::~LTexture() {
 }
 
 bool LTexture::loadFromFile(string path, SDL_Renderer* gRenderer) {
-	cout << "loadFromFile() accessed" << endl;  //hits this line, goes into free
-	free();  //commented out gives Bus error (core dumped)
+	free();
 	SDL_Texture* newTexture = NULL;
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == NULL) {
@@ -54,22 +48,17 @@ bool LTexture::loadFromFile(string path, SDL_Renderer* gRenderer) {
 		}
 		SDL_FreeSurface(loadedSurface);
 		loadedSurface = NULL;
-		cout << "free loaded surface" << endl;
 	}
 	mTexture = newTexture;
 	return mTexture != NULL;
 }
 
 void LTexture::free() {
-	cout << "free() accessed" << endl; //hits this
-	if(mTexture != NULL) { //comment out this if statement and it still says double free, but it does access the lower lines
-		cout << "free() if statement accessed" << endl; //doesn't get into if statement, this line displayed only once (not sure why/how that time was different)
+	if(mTexture != NULL) { 
 		SDL_DestroyTexture(mTexture);
 		mTexture = NULL;
 		mWidth = 0;
 		mHeight = 0;
-		//cout << "end of deleted if" << endl;
-		
 	}
 }
 
