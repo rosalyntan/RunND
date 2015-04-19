@@ -218,7 +218,7 @@ bool loadMedia() {
 	}
 
 	//Load character sprite sheet texture
-	if(!gCharacterTexture.loadFromFile("Character_Sprite.bmp", gRenderer)) {
+	if(!gCharacterTexture.loadFromFile("Character_Sprite.png", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}
