@@ -22,6 +22,8 @@ SDL_Renderer* gRenderer = NULL;
 const int BACKGROUND_ANIMATION_FRAMES = 13;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
+SDL_Rect gBackClipsS[1];
+SDL_Rect gBackClipsB[4];
 SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
 LTexture gSpriteSheetTexture;
 LTexture gCharacterTexture;
