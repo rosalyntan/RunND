@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "Object.h"
 using namespace std;
 
 class Obstacle : public Object {
