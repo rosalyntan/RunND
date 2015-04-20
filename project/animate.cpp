@@ -51,6 +51,8 @@ int main(int argc, char* argv[]) {
 			int numTurn = 0;
 			int dirTurn = 0;
 			int turn = 0;
+			int prevTurn = 0;
+			int userTurn = 0;
 			SDL_Rect* currentClipBack;
 		
 			//While application is running
@@ -64,15 +66,13 @@ int main(int argc, char* argv[]) {
 							/*case SDLK_DOWN: //both turns
 								frameBack = 1;
 								dirTurn = 2;
-								break;
+								break;*/
 							case SDLK_LEFT: //turn left
-								frameBack = 16;
-								dirTurn = 3;
+								userTurn = 3;
 								break;
 							case SDLK_RIGHT: //turn right
-								frameBack = 32;
-								dirTurn = 4;
-								break;*/
+								userTurn = 4;
+								break;
 						}
 					}
 					//User requests quit
@@ -81,28 +81,36 @@ int main(int argc, char* argv[]) {
 					}
 				}
 
+				srand(time(0));
 				if (numTurn == 0) {
 					//randomly generate number
-					srand(time(0));
-					turn = rand() % 15; 
-					cout << turn << endl;
-
+				//	prevTurn = turn;
+				//	turn = rand() % 15; 
+				//	cout << turn << endl;
+					while (prevTurn == turn) { //prevents the same turn from appearing twice in a row -- NOT CURRENTLY EFFECTIVE
+						turn = rand() % 15; 
+						cout << turn << endl;
+					}
 					//switch case for randomly generated turns
 					switch(turn) {
 						case 1: //both turns
 							frameBack = 1;
 							dirTurn = 2;
+							prevTurn = turn;
 							break;
 						case 2: //turn left
 							frameBack = 16;
-							dirTurn = 3;	
+							dirTurn = 3;
+							prevTurn = turn;	
 							break;
 						case 3: //turn right
 							frameBack = 32;
 							dirTurn = 4;
+							prevTurn = turn;
 							break;
 						default: //straight
 							dirTurn = 1;
+							prevTurn = turn;
 							break;
 					}
 				}
@@ -146,7 +154,7 @@ int main(int argc, char* argv[]) {
 						dirTurn=0;
 					}
 				}
-				else {
+				else if (dirTurn == 1) { //straight
 					currentClipBack = &gBackClips[frameBack];
 					numTurn = 0;
 					dirTurn = 0;
@@ -156,6 +164,12 @@ int main(int argc, char* argv[]) {
 					}*/
 				}
 
+
+				//if user doesn't tell character to run, the program quits (replace with game over screen?) -- NOT CURRENTLY EFFECTIVE 
+				if ((numTurn == 16) && (userTurn != dirTurn))
+					quit = true;
+
+				userTurn = 0;
 
 				SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 				gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);

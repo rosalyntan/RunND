@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <cstdlib>
+#include <ctime>
 #include "LTexture.h"
 using namespace std;
 
@@ -22,8 +24,6 @@ SDL_Renderer* gRenderer = NULL;
 const int BACKGROUND_ANIMATION_FRAMES = 13;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
-SDL_Rect gBackClipsS[1];
-SDL_Rect gBackClipsB[4];
 SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
 LTexture gSpriteSheetTexture;
 LTexture gCharacterTexture;
@@ -50,33 +50,68 @@ int main(int argc, char* argv[]) {
 			int jump = 0;
 			int numTurn = 0;
 			int dirTurn = 0;
+			int turn = 0;
+			int prevTurn = 0;
+			int userTurn = 0;
 			SDL_Rect* currentClipBack;
 		
 			//While application is running
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
 					if(e.type == SDL_KEYDOWN) {
-						switch(e.key.keysym.sym) {
+						switch(e.key.keysym.sym) { //switch case for key press
 							case SDLK_UP: //jump
 								direction = 1;
 								break;
-							case SDLK_DOWN: //both turns
+							/*case SDLK_DOWN: //both turns
 								frameBack = 1;
 								dirTurn = 2;
-								break;
+								break;*/
 							case SDLK_LEFT: //turn left
-								frameBack = 16;
-								dirTurn = 3;
+								userTurn = 3;
 								break;
 							case SDLK_RIGHT: //turn right
-								frameBack = 32;
-								dirTurn = 4;
+								userTurn = 4;
 								break;
 						}
 					}
 					//User requests quit
 					else if(e.type == SDL_QUIT) {
 						quit = true;
+					}
+				}
+
+				srand(time(0));
+				if (numTurn == 0) {
+					//randomly generate number
+				//	prevTurn = turn;
+				//	turn = rand() % 15; 
+				//	cout << turn << endl;
+					while (prevTurn == turn) { //prevents the same turn from appearing twice in a row -- NOT CURRENTLY EFFECTIVE
+						turn = rand() % 15; 
+						cout << turn << endl;
+					}
+					//switch case for randomly generated turns
+					switch(turn) {
+						case 1: //both turns
+							frameBack = 1;
+							dirTurn = 2;
+							prevTurn = turn;
+							break;
+						case 2: //turn left
+							frameBack = 16;
+							dirTurn = 3;
+							prevTurn = turn;	
+							break;
+						case 3: //turn right
+							frameBack = 32;
+							dirTurn = 4;
+							prevTurn = turn;
+							break;
+						default: //straight
+							dirTurn = 1;
+							prevTurn = turn;
+							break;
 					}
 				}
 
@@ -119,7 +154,7 @@ int main(int argc, char* argv[]) {
 						dirTurn=0;
 					}
 				}
-				else {
+				else if (dirTurn == 1) { //straight
 					currentClipBack = &gBackClips[frameBack];
 					numTurn = 0;
 					dirTurn = 0;
@@ -129,6 +164,12 @@ int main(int argc, char* argv[]) {
 					}*/
 				}
 
+
+				//if user doesn't tell character to run, the program quits (replace with game over screen?) -- NOT CURRENTLY EFFECTIVE 
+				if ((numTurn == 0) && (userTurn != dirTurn))
+					quit = true;
+
+				userTurn = 0;
 
 				SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 				gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
@@ -144,13 +185,25 @@ int main(int argc, char* argv[]) {
 				else
 					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
-				SDL_RenderPresent(gRenderer);
+//				SDL_RenderPresent(gRenderer); // another SDL_RenderPresent call later on, don't need this one?
 
 				//continuously cycle through all frames for character sprite
 				++frameChar;
 				if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
 					frameChar = 0;
 				}
+
+				/*Attempt to render object to texture*/
+				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_Rect fillRect1 = {190, 300, 20, 20};
+				SDL_Rect fillRect2 = {190, 350, 20, 20};
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderFillRect(gRenderer, &fillRect1);
+				SDL_RenderFillRect(gRenderer, &fillRect2);
+				SDL_SetRenderTarget(gRenderer, NULL);
+				SDL_RenderPresent(gRenderer);
+				/*Pretty much working, fix location of objects*/
 			}
 		}
 	}
