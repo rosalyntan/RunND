@@ -142,13 +142,25 @@ int main(int argc, char* argv[]) {
 				else
 					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
-				SDL_RenderPresent(gRenderer);
+//				SDL_RenderPresent(gRenderer); // another SDL_RenderPresent call later on, don't need this one?
 
 				//continuously cycle through all frames for character sprite
 				++frameChar;
 				if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
 					frameChar = 0;
 				}
+
+				/*Attempt to render object to texture*/
+				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_Rect fillRect1 = {190, 300, 20, 20};
+				SDL_Rect fillRect2 = {190, 350, 20, 20};
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderFillRect(gRenderer, &fillRect1);
+				SDL_RenderFillRect(gRenderer, &fillRect2);
+				SDL_SetRenderTarget(gRenderer, NULL);
+				SDL_RenderPresent(gRenderer);
+				/*Pretty much working, fix location of objects*/
 			}
 		}
 	}

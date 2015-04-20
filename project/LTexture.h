@@ -13,6 +13,7 @@ class LTexture {
 		void render(int x, int y, SDL_Rect* clip = NULL, SDL_Renderer* renderer=NULL);
 		int getWidth();
 		int getHeight();
+		SDL_Texture* getTexture(); // might need to remove
 	private:
 		SDL_Texture* mTexture;
 		int mWidth;
@@ -77,4 +78,8 @@ int LTexture::getWidth() {
 
 int LTexture::getHeight() {
 	return mHeight;
+}
+/*Added this function to help with objects, not working atm*/
+SDL_Texture* LTexture::getTexture() {
+	return mTexture;
 }
