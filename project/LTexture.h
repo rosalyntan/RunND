@@ -79,7 +79,7 @@ int LTexture::getWidth() {
 int LTexture::getHeight() {
 	return mHeight;
 }
-/*Added this function to help with objects, not working atm*/
+/*For rendering an object on to a texture: SDL_SetRenderTarget requires an SDL_Texture as an argument, so this function returns the SDL_Texture*/
 SDL_Texture* LTexture::getTexture() {
 	return mTexture;
 }
