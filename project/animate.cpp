@@ -22,6 +22,8 @@ SDL_Renderer* gRenderer = NULL;
 const int BACKGROUND_ANIMATION_FRAMES = 13;
 const int CHARACTER_ANIMATION_FRAMES = 4;
 SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
+SDL_Rect gBackClipsS[1];
+SDL_Rect gBackClipsB[4];
 SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
 LTexture gSpriteSheetTexture;
 LTexture gCharacterTexture;
@@ -46,7 +48,10 @@ int main(int argc, char* argv[]) {
 		 	int frameChar = 0;
 			int direction = 0;
 			int jump = 0;
-
+			int numTurn = 0;
+			int dirTurn = 0;
+			SDL_Rect* currentClipBack;
+		
 			//While application is running
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
@@ -55,11 +60,17 @@ int main(int argc, char* argv[]) {
 							case SDLK_UP: //jump
 								direction = 1;
 								break;
+							case SDLK_DOWN: //both turns
+								frameBack = 1;
+								dirTurn = 2;
+								break;
 							case SDLK_LEFT: //turn left
-								direction = 2;
+								frameBack = 16;
+								dirTurn = 3;
 								break;
 							case SDLK_RIGHT: //turn right
-								direction = 3;
+								frameBack = 32;
+								dirTurn = 4;
 								break;
 						}
 					}
@@ -68,32 +79,77 @@ int main(int argc, char* argv[]) {
 						quit = true;
 					}
 				}
-				if(!quit) {
-					SDL_Rect* currentClipBack = &gBackClips[frameBack / BACKGROUND_ANIMATION_FRAMES];
-					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
-					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-					//sprite jumps when up arrow is pressed
-					if (direction == 1) {						
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
-						jump++;
-						if (jump > 4) {
-							direction = 0;
-							jump = 0;
-						}
-					}
-					else
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
-					//need 2 different sets of frames
-					SDL_RenderPresent(gRenderer);
-					++frameBack;
-					if(frameBack/BACKGROUND_ANIMATION_FRAMES >= BACKGROUND_ANIMATION_FRAMES) {
+				if (dirTurn == 2) { //both turns
+					if (numTurn < 16) {
+						currentClipBack = &gBackClips[frameBack/4 + 1];
+						++numTurn;
+						dirTurn = 2;
+						++frameBack;
+					}
+					if(frameBack >= 16) {
 						frameBack = 0;
+						numTurn = 0;
+						dirTurn=0;
 					}
-					++frameChar;
-					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
-						frameChar = 0;
+				}
+				else if (dirTurn == 3) { //left turn
+					if (numTurn < 16) {
+						currentClipBack = &gBackClips[frameBack/4 + 1];
+						++numTurn;
+						dirTurn = 3;
+						++frameBack;
 					}
+					if(frameBack >= 32) {
+						frameBack = 0;
+						numTurn = 0;
+						dirTurn=0;
+					}
+				}
+				else if (dirTurn == 4) { //right turn
+					if (numTurn < 16) {
+						currentClipBack = &gBackClips[frameBack/4 + 1];
+						++numTurn;
+						dirTurn = 4;
+						++frameBack;
+					}
+					if(frameBack >= 48) {
+						frameBack = 0;
+						numTurn = 0;
+						dirTurn=0;
+					}
+				}
+				else {
+					currentClipBack = &gBackClips[frameBack];
+					numTurn = 0;
+					dirTurn = 0;
+			/*		++frameBack;
+					if(frameBack >= 1) {
+						frameBack = 0;
+					}*/
+				}
+
+
+				SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
+				gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+				//sprite jumps when up arrow is pressed
+				if (direction == 1) {						
+					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+					jump++;
+					if (jump > 4) {
+						direction = 0;
+						jump = 0;
+					}
+				}
+				else
+					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+
+				SDL_RenderPresent(gRenderer);
+
+				//continuously cycle through all frames for character sprite
+				++frameChar;
+				if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
+					frameChar = 0;
 				}
 			}
 		}
