@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <cstdlib>
+#include <ctime>
 #include "LTexture.h"
 using namespace std;
 
@@ -48,17 +50,18 @@ int main(int argc, char* argv[]) {
 			int jump = 0;
 			int numTurn = 0;
 			int dirTurn = 0;
+			int turn = 0;
 			SDL_Rect* currentClipBack;
 		
 			//While application is running
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
 					if(e.type == SDL_KEYDOWN) {
-						switch(e.key.keysym.sym) {
+						switch(e.key.keysym.sym) { //switch case for key press
 							case SDLK_UP: //jump
 								direction = 1;
 								break;
-							case SDLK_DOWN: //both turns
+							/*case SDLK_DOWN: //both turns
 								frameBack = 1;
 								dirTurn = 2;
 								break;
@@ -69,12 +72,38 @@ int main(int argc, char* argv[]) {
 							case SDLK_RIGHT: //turn right
 								frameBack = 32;
 								dirTurn = 4;
-								break;
+								break;*/
 						}
 					}
 					//User requests quit
 					else if(e.type == SDL_QUIT) {
 						quit = true;
+					}
+				}
+
+				if (numTurn == 0) {
+					//randomly generate number
+					srand(time(0));
+					turn = rand() % 15; 
+					cout << turn << endl;
+
+					//switch case for randomly generated turns
+					switch(turn) {
+						case 1: //both turns
+							frameBack = 1;
+							dirTurn = 2;
+							break;
+						case 2: //turn left
+							frameBack = 16;
+							dirTurn = 3;	
+							break;
+						case 3: //turn right
+							frameBack = 32;
+							dirTurn = 4;
+							break;
+						default: //straight
+							dirTurn = 1;
+							break;
 					}
 				}
 
