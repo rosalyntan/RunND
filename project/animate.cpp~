@@ -86,7 +86,6 @@ int main(int argc, char* argv[]) {
 				if (numTurn == 0) {
 					//randomly generate number
 					turn = rand() % difficulty; 
-					difficulty--; //gets harder as game continues
 
 					//switch case for randomly generated turns
 					switch(turn) {
@@ -163,10 +162,10 @@ int main(int argc, char* argv[]) {
 
 
 				//if user doesn't tell character to run, the program quits (replace with game over screen?) -- NOT CURRENTLY EFFECTIVE 
-				if ((numTurn == 16) && (userTurn != dirTurn))
+				if ((numTurn == 15) && (userTurn != dirTurn))
 					quit = true;
-
-				userTurn = 0;
+				if (numTurn < 13)
+					userTurn = 0;
 
 				SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 				gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
@@ -181,8 +180,6 @@ int main(int argc, char* argv[]) {
 				}
 				else
 					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
-
-//				SDL_RenderPresent(gRenderer); // another SDL_RenderPresent call later on, don't need this one?
 
 				//continuously cycle through all frames for character sprite
 				++frameChar;
