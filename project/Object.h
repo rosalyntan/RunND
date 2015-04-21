@@ -10,9 +10,10 @@ using namespace std;
 class Object {
 	public:
 		Object();
-//		~Object();
+		~Object();
 		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 		void setY(int);
+		void setX(int);
 		void setSize(int);
 	//	virtual void effect() = 0;
 	private:
