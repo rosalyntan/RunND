@@ -1,5 +1,5 @@
 CMP = g++
-MAIN = animate
+MAIN = RunND
 FUNC = Object
 FLAGS = -lSDL2 -lSDL2_image
 
