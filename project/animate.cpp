@@ -76,6 +76,9 @@ int main(int argc, char* argv[]) {
 						start = true;
 					}
 				}
+				if(e.type == SDL_QUIT) {
+					return 0;
+				}
 			}
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
