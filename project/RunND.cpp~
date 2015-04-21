@@ -46,16 +46,16 @@ int main(int argc, char* argv[]) {
 			bool quit = false;
 
 			SDL_Event e; //Event handler
-			int frameBack = 0;
+//			int frameBack = 0;
 		 	int frameChar = 0;
 			int direction = 0;
 			int jump = 0;
 			int numTurn = 0;
-			int dirTurn = 0;
-			int turn = 0;
-			int prevTurn = 0;
+//			int dirTurn = 0;
+//			int turn = 0;
+//			int prevTurn = 0;
 			int userTurn = 0;
-			int difficulty = 50; //used with random number generator, can be decreased to make game harder
+//			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			SDL_Rect* currentClipBack;
 			bool start = false;
 		
