@@ -56,8 +56,27 @@ int main(int argc, char* argv[]) {
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			SDL_Rect* currentClipBack;
+			bool start = false;
 		
 			//While application is running
+		while(true) {
+			start = false;
+			while(!start) {
+				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_Rect startButton = {100, 300, 200, 200};
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderFillRect(gRenderer, &startButton);
+				SDL_SetRenderTarget(gRenderer, NULL);
+				SDL_RenderPresent(gRenderer);
+				if(SDL_PollEvent(&e)) {
+					int x = e.button.x;
+					int y = e.button.y;
+					if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>300 && y<500) {
+						start = true;
+					}
+				}
+			}
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
 					if(e.type == SDL_KEYDOWN) {
@@ -79,7 +98,7 @@ int main(int argc, char* argv[]) {
 					}
 					//User requests quit
 					else if(e.type == SDL_QUIT) {
-						quit = true;
+						return 0;
 					}
 				}
 
@@ -202,6 +221,7 @@ int main(int argc, char* argv[]) {
 				SDL_RenderPresent(gRenderer);
 				/*Pretty much working, fix location of objects*/
 			}
+		}
 		}
 	}
 	//Free resources and close SDL
