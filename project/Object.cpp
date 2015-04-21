@@ -21,23 +21,6 @@ void Object::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_Rect fillRect = {xPos, yPos, size, size};
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
 	SDL_RenderFillRect(gRenderer, &fillRect);
-	// Testing location: DELETE LATER
-	setSize(size*1.5);
-	setX(200-size/2);
-	setY(yPos+size*2);
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_Rect fillRect1 = {xPos, yPos, size, size};
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
-	SDL_RenderFillRect(gRenderer, &fillRect1);
-	SDL_SetRenderTarget(gRenderer, NULL);
-	setSize(size*1.5);
-	setX(200-size/2);
-	setY(yPos+size*2);
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_Rect fillRect2 = {xPos, yPos, size, size};
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
-	SDL_RenderFillRect(gRenderer, &fillRect2);
-	SDL_SetRenderTarget(gRenderer, NULL);
 	//SDL_RenderPresent(gRenderer);
 }
 
@@ -51,4 +34,15 @@ void Object::setX(int x) {
 
 void Object::setSize(int s) {
 	size = s;
+}
+
+int Object::getY() {
+	return yPos;
+}
+
+void Object::nextFrame() {
+	setSize(size*1.25);
+	setX(200-size/2);
+	setY(yPos+size*2);
+	
 }

@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 			int turn = 0;
 			int prevTurn = 0;
 			int userTurn = 0;
-			int difficulty = 500000; //used with random number generator, can be decreased to make game harder
+			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			SDL_Rect* currentClipBack;
 			bool start = false;
 		
@@ -84,6 +84,7 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				quit = false;
+				Object * a = new Object;
 				while(!quit) { 
 					if (SDL_PollEvent(&e)) {
 						if(e.type == SDL_KEYDOWN) {
@@ -203,8 +204,14 @@ int main(int argc, char* argv[]) {
 					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
 
 					//call objects
-					Object a;
-					a.display(gRenderer, gSpriteSheetTexture.getTexture());
+					if (frameBack%4==0) {
+						a -> nextFrame();
+					}
+					if (frameBack==0) {
+						delete a;
+						Object * a = new Object;
+					}
+					a -> display(gRenderer, gSpriteSheetTexture.getTexture());
 
 					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					//sprite jumps when up arrow is pressed
