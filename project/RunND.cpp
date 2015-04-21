@@ -63,16 +63,18 @@ int main(int argc, char* argv[]) {
 				start = false;
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
-					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-					SDL_Rect startButton = {100, 300, 200, 200};
-					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+					SDL_Rect startScreen = {0, 0, 400, 600};
+					SDL_RenderFillRect(gRenderer, &startScreen);
+					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x88, 0xFF, 0xFF);
+					SDL_Rect startButton = {100, 200, 200, 200};
 					SDL_RenderFillRect(gRenderer, &startButton);
 					SDL_SetRenderTarget(gRenderer, NULL);
 					SDL_RenderPresent(gRenderer);
 					if(SDL_PollEvent(&e)) {
 						int x = e.button.x;
 						int y = e.button.y;
-						if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>300 && y<500) {
+						if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>200 && y<400) {
 							start = true;
 						}
 					}
