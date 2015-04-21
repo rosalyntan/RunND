@@ -13,10 +13,12 @@ class Object {
 //		~Object();
 		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 		void setY(int);
+		void setSize(int);
 	//	virtual void effect() = 0;
 	private:
 		int xPos;
 		int yPos;
+		int size;
 };
 
 #endif
