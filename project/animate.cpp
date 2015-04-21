@@ -162,8 +162,11 @@ int main(int argc, char* argv[]) {
 
 
 				//if user doesn't tell character to run, the program quits
-				if ((numTurn == 15) && (userTurn != dirTurn))
+				if ((numTurn == 15) && (dirTurn == 2) && ((userTurn != 3)||(userTurn!=4))) //--this part currently does not work
+					quit = true;	
+				else if ((numTurn == 15) && (userTurn != dirTurn))
 					quit = true;
+
 				if (numTurn < 13)
 					userTurn = 0;
 
