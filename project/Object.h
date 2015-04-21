@@ -4,16 +4,16 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "LTexture.h"
+//#include "LTexture.h"
 using namespace std;
 
-class Object : public LTexture {
+class Object {
 	public:
 		Object();
-		~Object();
-		void display();
+//		~Object();
+		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 		void setY(int);
-		virtual void effect() = 0;
+	//	virtual void effect() = 0;
 	private:
 		int xPos;
 		int yPos;

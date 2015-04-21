@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "LTexture.h"
+#include "Object.h"
 using namespace std;
 
 const int SCREEN_WIDTH = 400;
@@ -80,6 +81,7 @@ int main(int argc, char* argv[]) {
 					return 0;
 				}
 			}
+			quit = false;
 			while(!quit) { 
 				if (SDL_PollEvent(&e)) {
 					if(e.type == SDL_KEYDOWN) {
@@ -211,8 +213,10 @@ int main(int argc, char* argv[]) {
 				if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
 					frameChar = 0;
 				}
-
-				/*Attempt to render object to texture*/
+				Object a;
+				a.display(gRenderer, gSpriteSheetTexture.getTexture());
+				
+				/*Attempt to render object to texture
 				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_Rect fillRect1 = {190, 300, 20, 20};
@@ -222,7 +226,7 @@ int main(int argc, char* argv[]) {
 				SDL_RenderFillRect(gRenderer, &fillRect2);
 				SDL_SetRenderTarget(gRenderer, NULL);
 				SDL_RenderPresent(gRenderer);
-				/*Pretty much working, fix location of objects*/
+				*/
 			}
 		}
 		}

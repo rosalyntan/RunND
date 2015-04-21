@@ -2,18 +2,19 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Object.h"
-#include "LTexture.h"
+//#include "LTexture.h"
 using namespace std;
 
-Object::Object():LTexture() {
+Object::Object() {
+	xPos = 100;
 	setY(300);
 }
 
-Object::~Object() {
+//Object::~Object() {
 
-}
+//}
 
-void Object::display(SDL_Renderer* gRenderer, SDL_Texture background) {
+void Object::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_SetRenderTarget(gRenderer, background);
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_Rect fillRect1 = {190, 300, 20, 20};

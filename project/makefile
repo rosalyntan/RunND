@@ -1,18 +1,18 @@
 CMP = g++
 MAIN = animate
-FUNC = LTexture
+FUNC = Object
 FLAGS = -lSDL2 -lSDL2_image
 
 all: $(MAIN)
 
-#$(MAIN): $(MAIN).o
-#	$(CMP) $(MAIN).o -o $(MAIN) $(FLAGS)
+$(MAIN): $(MAIN).o $(FUNC).o
+	$(CMP) $(MAIN).o $(FUNC).o -o $(MAIN) $(FLAGS)
 
-$(MAIN): $(MAIN).cpp
-	$(CMP) $(MAIN).cpp -o $(MAIN) $(FLAGS)
+$(MAIN).o: $(MAIN).cpp
+	$(CMP) -c $(MAIN).cpp $(FLAGS)
 
-#$(FUNC).o: $(FUNC).cpp
-#	$(CMP) -c $(FUNC).cpp $(FLAGS)
+$(FUNC).o: $(FUNC).cpp
+	$(CMP) -c $(FUNC).cpp $(FLAGS)
 
 clean:
 	rm *.o $(MAIN) *~

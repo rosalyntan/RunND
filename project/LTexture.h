@@ -1,3 +1,6 @@
+#ifndef LTEXTURE_H
+#define LTEXTURE_H
+
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -83,3 +86,5 @@ int LTexture::getHeight() {
 SDL_Texture* LTexture::getTexture() {
 	return mTexture;
 }
+
+#endif
