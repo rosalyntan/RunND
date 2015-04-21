@@ -29,6 +29,7 @@ LTexture gSpriteSheetTexture;
 LTexture gCharacterTexture;
 
 int main(int argc, char* argv[]) {
+	srand(time(NULL));
 	//Start up SDL and create window
 	if(!init()) {
 		cout << "Failed to initialize." << endl;
@@ -53,6 +54,7 @@ int main(int argc, char* argv[]) {
 			int turn = 0;
 			int prevTurn = 0;
 			int userTurn = 0;
+			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			SDL_Rect* currentClipBack;
 		
 			//While application is running
@@ -81,16 +83,10 @@ int main(int argc, char* argv[]) {
 					}
 				}
 
-				srand(time(0));
 				if (numTurn == 0) {
 					//randomly generate number
-				//	prevTurn = turn;
-				//	turn = rand() % 15; 
-				//	cout << turn << endl;
-					while (prevTurn == turn) { //prevents the same turn from appearing twice in a row -- NOT CURRENTLY EFFECTIVE
-						turn = rand() % 15; 
-						cout << turn << endl;
-					}
+					turn = rand() % difficulty; 
+
 					//switch case for randomly generated turns
 					switch(turn) {
 						case 1: //both turns
