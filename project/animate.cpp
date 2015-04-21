@@ -44,8 +44,7 @@ int main(int argc, char* argv[]) {
 			//Main loop flag
 			bool quit = false;
 
-			//Event handler
-			SDL_Event e;
+			SDL_Event e; //Event handler
 			int frameBack = 0;
 		 	int frameChar = 0;
 			int direction = 0;
@@ -60,175 +59,161 @@ int main(int argc, char* argv[]) {
 			bool start = false;
 		
 			//While application is running
-		while(true) {
-			start = false;
-			while(!start) {
-				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_Rect startButton = {100, 300, 200, 200};
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-				SDL_RenderFillRect(gRenderer, &startButton);
-				SDL_SetRenderTarget(gRenderer, NULL);
-				SDL_RenderPresent(gRenderer);
-				if(SDL_PollEvent(&e)) {
-					int x = e.button.x;
-					int y = e.button.y;
-					if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>300 && y<500) {
-						start = true;
-					}
-				}
-				if(e.type == SDL_QUIT) {
-					return 0;
-				}
-			}
-			quit = false;
-			while(!quit) { 
-				if (SDL_PollEvent(&e)) {
-					if(e.type == SDL_KEYDOWN) {
-						switch(e.key.keysym.sym) { //switch case for key press
-							case SDLK_UP: //jump
-								direction = 1;
-								break;
-							/*case SDLK_DOWN: //both turns
-								frameBack = 1;
-								dirTurn = 2;
-								break;*/
-							case SDLK_LEFT: //turn left
-								userTurn = 3;
-								break;
-							case SDLK_RIGHT: //turn right
-								userTurn = 4;
-								break;
+			while(true) {
+				start = false;
+				while(!start) {
+					SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
+					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+					SDL_Rect startButton = {100, 300, 200, 200};
+					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+					SDL_RenderFillRect(gRenderer, &startButton);
+					SDL_SetRenderTarget(gRenderer, NULL);
+					SDL_RenderPresent(gRenderer);
+					if(SDL_PollEvent(&e)) {
+						int x = e.button.x;
+						int y = e.button.y;
+						if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>300 && y<500) {
+							start = true;
 						}
 					}
-					//User requests quit
-					else if(e.type == SDL_QUIT) {
+					if(e.type == SDL_QUIT) {
 						return 0;
 					}
 				}
+				quit = false;
+				while(!quit) { 
+					if (SDL_PollEvent(&e)) {
+						if(e.type == SDL_KEYDOWN) {
+							switch(e.key.keysym.sym) { //switch case for key press
+								case SDLK_UP: //jump
+									direction = 1;
+									break;
+								case SDLK_LEFT: //turn left
+									userTurn = 3;
+									break;
+								case SDLK_RIGHT: //turn right
+									userTurn = 4;
+									break;
+							}
+						}
+						//User requests quit
+						else if(e.type == SDL_QUIT) {
+							return 0;
+						}
+					}
 
-				if (numTurn == 0) {
-					//randomly generate number
-					turn = rand() % difficulty; 
+					if (numTurn == 0) {
+						//randomly generate number
+						turn = rand() % difficulty; 
 
-					//switch case for randomly generated turns
-					switch(turn) {
-						case 1: //both turns
-							frameBack = 1;
+						//switch case for randomly generated turns
+						switch(turn) {
+							case 1: //both turns
+								frameBack = 1;
+								dirTurn = 2;
+								prevTurn = turn;
+								break;
+							case 2: //turn left
+								frameBack = 16;
+								dirTurn = 3;
+								prevTurn = turn;	
+								break;
+							case 3: //turn right
+								frameBack = 32;
+								dirTurn = 4;
+								prevTurn = turn;
+								break;
+							default: //straight
+								dirTurn = 1;
+								prevTurn = turn;
+								break;
+						}
+					}
+
+					if (dirTurn == 2) { //both turns
+						if (numTurn < 16) {
+							currentClipBack = &gBackClips[frameBack/4 + 1];
+							++numTurn;
 							dirTurn = 2;
-							prevTurn = turn;
-							break;
-						case 2: //turn left
-							frameBack = 16;
+							++frameBack;
+						}
+						if(frameBack >= 16) {
+							frameBack = 0;
+							numTurn = 0;
+							dirTurn=0;
+						}
+					}
+					else if (dirTurn == 3) { //left turn
+						if (numTurn < 16) {
+							currentClipBack = &gBackClips[frameBack/4 + 1];
+							++numTurn;
 							dirTurn = 3;
-							prevTurn = turn;	
-							break;
-						case 3: //turn right
-							frameBack = 32;
+							++frameBack;
+						}
+						if(frameBack >= 32) {
+							frameBack = 0;
+							numTurn = 0;
+							dirTurn=0;
+						}
+					}
+					else if (dirTurn == 4) { //right turn
+						if (numTurn < 16) {
+							currentClipBack = &gBackClips[frameBack/4 + 1];
+							++numTurn;
 							dirTurn = 4;
-							prevTurn = turn;
-							break;
-						default: //straight
-							dirTurn = 1;
-							prevTurn = turn;
-							break;
+							++frameBack;
+						}
+						if(frameBack >= 48) {
+							frameBack = 0;
+							numTurn = 0;
+							dirTurn=0;
+						}
 					}
-				}
-
-				if (dirTurn == 2) { //both turns
-					if (numTurn < 16) {
-						currentClipBack = &gBackClips[frameBack/4 + 1];
-						++numTurn;
-						dirTurn = 2;
-						++frameBack;
-					}
-					if(frameBack >= 16) {
-						frameBack = 0;
+					else if (dirTurn == 1) { //straight
+						currentClipBack = &gBackClips[frameBack];
 						numTurn = 0;
-						dirTurn=0;
+						dirTurn = 0;
+				/*		++frameBack;
+						if(frameBack >= 1) {
+							frameBack = 0;
+						}*/
 					}
-				}
-				else if (dirTurn == 3) { //left turn
-					if (numTurn < 16) {
-						currentClipBack = &gBackClips[frameBack/4 + 1];
-						++numTurn;
-						dirTurn = 3;
-						++frameBack;
-					}
-					if(frameBack >= 32) {
-						frameBack = 0;
-						numTurn = 0;
-						dirTurn=0;
-					}
-				}
-				else if (dirTurn == 4) { //right turn
-					if (numTurn < 16) {
-						currentClipBack = &gBackClips[frameBack/4 + 1];
-						++numTurn;
-						dirTurn = 4;
-						++frameBack;
-					}
-					if(frameBack >= 48) {
-						frameBack = 0;
-						numTurn = 0;
-						dirTurn=0;
-					}
-				}
-				else if (dirTurn == 1) { //straight
-					currentClipBack = &gBackClips[frameBack];
-					numTurn = 0;
-					dirTurn = 0;
-			/*		++frameBack;
-					if(frameBack >= 1) {
-						frameBack = 0;
-					}*/
-				}
 
+					//if user doesn't tell character to run, the program quits
+					if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0))
+						quit = true;	
+					else if ((numTurn == 15) && (userTurn != dirTurn))
+						quit = true;
 
-				//if user doesn't tell character to run, the program quits
-				if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0)) //--this part currently does not work
-					quit = true;	
-				else if ((numTurn == 15) && (userTurn != dirTurn))
-					quit = true;
+					if (numTurn < 10)
+						userTurn = 0;
+	
+					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
 
-				if (numTurn < 10)
-					userTurn = 0;
-
-				SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
-				gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-				//sprite jumps when up arrow is pressed
-				if (direction == 1) {						
-					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
-					jump++;
-					if (jump > 4) {
-						direction = 0;
-						jump = 0;
+					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
+					//sprite jumps when up arrow is pressed
+					if (direction == 1) {						
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+						jump++;
+						if (jump > 4) {
+							direction = 0;
+							jump = 0;
+						}
 					}
-				}
-				else
-					gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+					else
+						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
-				//continuously cycle through all frames for character sprite
-				++frameChar;
-				if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
-					frameChar = 0;
+					//continuously cycle through all frames for character sprite
+					++frameChar;
+					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
+						frameChar = 0;
+					}
+
+					//call objects
+					Object a;
+					a.display(gRenderer, gSpriteSheetTexture.getTexture());
 				}
-				Object a;
-				a.display(gRenderer, gSpriteSheetTexture.getTexture());
-				
-				/*Attempt to render object to texture
-				SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_Rect fillRect1 = {190, 300, 20, 20};
-				SDL_Rect fillRect2 = {190, 350, 20, 20};
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-				SDL_RenderFillRect(gRenderer, &fillRect1);
-				SDL_RenderFillRect(gRenderer, &fillRect2);
-				SDL_SetRenderTarget(gRenderer, NULL);
-				SDL_RenderPresent(gRenderer);
-				*/
 			}
-		}
 		}
 	}
 	//Free resources and close SDL
