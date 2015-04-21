@@ -11,6 +11,7 @@ class Object : public LTexture {
 	public:
 		Object();
 		~Object();
+		void display();
 		void setY(int);
 		virtual void effect() = 0;
 	private:
