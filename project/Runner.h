@@ -7,14 +7,19 @@
 #include "LTexture.h"
 using namespace std;
 
-class Runner : public LTexture {
+class Runner{
 	public:
 		Runner();
 		~Runner();
-		void jump();
-//		void duck();
+		bool loadMedia(SDL_Renderer*, SDL_Window*);
+		void frames();
+		void display(int, int, SDL_Renderer*, int);
 	private:
-		int speed;
+	 	int frameChar;
+		int jump;
+		SDL_Rect gCharClips[4];
+		SDL_Rect* currentClipChar;
+		LTexture gCharacterTexture;
 };
 
 #endif

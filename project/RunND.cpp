@@ -6,6 +6,7 @@
 #include "LTexture.h"
 #include "Object.h"
 #include "Background.h"
+#include "Runner.h"
 using namespace std;
 
 const int SCREEN_WIDTH = 400;
@@ -23,13 +24,14 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Animation
-const int CHARACTER_ANIMATION_FRAMES = 4;
-SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
-LTexture gCharacterTexture;
+//const int CHARACTER_ANIMATION_FRAMES = 4;
+//SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
+//LTexture gCharacterTexture;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
 	Background * back = new Background;  //Initialize call to background class
+	Runner * character = new Runner;
 
 	//Start up SDL and create window
 	if(!init()) {
@@ -37,7 +39,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
@@ -45,9 +47,9 @@ int main(int argc, char* argv[]) {
 			bool quit = false;
 
 			SDL_Event e; //Event handler
-		 	int frameChar = 0;
+//		 	int frameChar = 0;
 			int direction = 0;
-			int jump = 0;
+//			int jump = 0;
 			int random = 0;
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
@@ -146,9 +148,12 @@ int main(int argc, char* argv[]) {
 						}
 					}
 
-					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
+					character -> frames();
+					character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
+
+//					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					//sprite jumps when up arrow is pressed
-					if (direction == 1) {						
+/*					if (direction == 1) {						
 						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 						jump++;
 						if (jump > 4) {
@@ -159,11 +164,12 @@ int main(int argc, char* argv[]) {
 					else
 						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 
+*/
 					//continuously cycle through all frames for character sprite
-					++frameChar;
+/*					++frameChar;
 					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
 						frameChar = 0;
-					}
+					}*/
 					SDL_RenderPresent(gRenderer);
 				}
 			}
@@ -171,6 +177,7 @@ int main(int argc, char* argv[]) {
 	}
 	//Free resources and close SDL
 	delete back;
+	delete character;
 	close();
 
 	return 0;
@@ -214,7 +221,7 @@ bool loadMedia() {
 		success = false;
 	}
 
-	//Load character sprite sheet texture
+/*	//Load character sprite sheet texture
 	if(!gCharacterTexture.loadFromFile("Character_Sprite.png", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
@@ -239,13 +246,13 @@ bool loadMedia() {
 		gCharClips[3].y = 0;
 		gCharClips[3].w = 80;
 		gCharClips[3].h = 150;
-	}
+	}*/
 	return success;
 }
 
 void close() {
 	
-	gCharacterTexture.free(); 
+//	gCharacterTexture.free(); 
 
 	SDL_DestroyRenderer(gRenderer); 
 	gRenderer=NULL; 
