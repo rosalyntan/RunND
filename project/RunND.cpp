@@ -23,22 +23,23 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Animation
-const int BACKGROUND_ANIMATION_FRAMES = 13;
+//const int BACKGROUND_ANIMATION_FRAMES = 13;
 const int CHARACTER_ANIMATION_FRAMES = 4;
-SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
+//SDL_Rect gBackClips[BACKGROUND_ANIMATION_FRAMES];
 SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
-LTexture gSpriteSheetTexture;
+//LTexture gSpriteSheetTexture;
 LTexture gCharacterTexture;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
+	Background * back = new Background;
 	//Start up SDL and create window
 	if(!init()) {
 		cout << "Failed to initialize." << endl;
 	}
 	else {
 		//Load media
-		if(!loadMedia()) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
@@ -46,24 +47,24 @@ int main(int argc, char* argv[]) {
 			bool quit = false;
 
 			SDL_Event e; //Event handler
-			int frameBack = 0;
+//			int frameBack = 0;
 		 	int frameChar = 0;
 			int direction = 0;
 			int jump = 0;
-			int numTurn = 0;
-			int dirTurn = 0;
-			int turn = 0;
-			int prevTurn = 0;
+//			int numTurn = 0;
+//			int dirTurn = 0;
+			int random = 0;
+//			int prevTurn = 0;
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
-			SDL_Rect* currentClipBack;
+//			SDL_Rect* currentClipBack;
 			bool start = false;
 		
 			//While application is running
 			while(true) {
 				start = false;
 				while(!start) {
-					SDL_SetRenderTarget(gRenderer, gSpriteSheetTexture.getTexture());
+					SDL_SetRenderTarget(gRenderer, back -> getText());
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
 					SDL_Rect startScreen = {0, 0, 400, 600};
 					SDL_RenderFillRect(gRenderer, &startScreen);
@@ -106,14 +107,18 @@ int main(int argc, char* argv[]) {
 						}
 					}
 				
-	/*				Background back;
-					if (back.getNumTurn() == 0) {
-						back.turn();
-						currentClipBack = back.frames();
-						quit = back.userTurn();
-*/
-						//CALL TURN FUNCTION FROM BACKGROUND.CPP
+					//Background back;
+					if (back -> getNumTurn() == 0) {
+						random = rand() % difficulty;
+						back -> turn(random);
+					}
+					back -> frames();
+					quit = back -> lose(userTurn);
+					if (back -> getNumTurn()<10)
+						userTurn = 0;
 
+						//CALL TURN FUNCTION FROM BACKGROUND.CPP
+/*
 					if (numTurn == 0) {
 						//randomly generate number
 						turn = rand() % difficulty; 
@@ -141,8 +146,9 @@ int main(int argc, char* argv[]) {
 								break;
 						}
 					}
+*/
 
-
+/*
 					if (dirTurn == 2) { //both turns
 						if (numTurn < 16) {
 							currentClipBack = &gBackClips[frameBack/4 + 1];
@@ -191,8 +197,8 @@ int main(int argc, char* argv[]) {
 				//			frameBack = 0;
 				//		}
 					} 
-
-					//if user doesn't tell character to turn, the program quits
+*/
+/*					//if user doesn't tell character to turn, the program quits
 					if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0))
 						quit = true;	
 					else if ((numTurn == 15) && (userTurn != dirTurn))
@@ -200,18 +206,19 @@ int main(int argc, char* argv[]) {
 
 					if (numTurn < 10)
 						userTurn = 0;
-	
-					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+	*/
+//					gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+					back -> display(400, 600, gRenderer);
 
 					//call objects
-					if (frameBack%4==0) {
+					if (back -> getFrameBack()%4==0) {
 						a -> nextFrame();
 					}
-					if (frameBack==0) {
+					if (back -> getFrameBack()==0) {
 						delete a;
 						Object * a = new Object;
 					}
-					a -> display(gRenderer, gSpriteSheetTexture.getTexture());
+					a -> display(gRenderer, (back -> getText()));
 
 					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					//sprite jumps when up arrow is pressed
@@ -237,6 +244,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	//Free resources and close SDL
+	delete back;
 	close();
 
 	return 0;
@@ -280,7 +288,7 @@ bool loadMedia() {
 	}
 
 	//Load background sprite sheet texture
-	if(!gSpriteSheetTexture.loadFromFile("Background_sprite.bmp", gRenderer)) {
+/*	if(!gSpriteSheetTexture.loadFromFile("Background_sprite.bmp", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 		success = false;
 	}
@@ -354,7 +362,7 @@ bool loadMedia() {
 		gBackClips[12].w = 400;
 		gBackClips[12].h = 600;
 	}
-
+*/
 	//Load character sprite sheet texture
 	if(!gCharacterTexture.loadFromFile("Character_Sprite.png", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
@@ -385,7 +393,8 @@ bool loadMedia() {
 }
 
 void close() {
-	gSpriteSheetTexture.free(); 
+//	gSpriteSheetTexture.free(); 
+	
 	gCharacterTexture.free(); 
 
 	SDL_DestroyRenderer(gRenderer); 

@@ -1,28 +1,9 @@
-#ifndef LTEXTURE_H
-#define LTEXTURE_H
-
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "LTexture.h"
 using namespace std;
 
-//Texture wrapper class
-class LTexture {
-	public:
-		LTexture();
-		~LTexture();
-		bool loadFromFile(string path, SDL_Renderer* gRenderer);
-		void free();
-		void render(int x, int y, SDL_Rect* clip = NULL, SDL_Renderer* renderer=NULL);
-		int getWidth();
-		int getHeight();
-		SDL_Texture* getTexture(); // might need to remove
-	private:
-		SDL_Texture* mTexture;
-		int mWidth;
-		int mHeight;
-};
-/*
 LTexture::LTexture() {
 	mTexture = NULL;
 	mWidth = 0;
@@ -82,9 +63,7 @@ int LTexture::getWidth() {
 int LTexture::getHeight() {
 	return mHeight;
 }
-//For rendering an object on to a texture: SDL_SetRenderTarget requires an SDL_Texture as an argument, so this function returns the SDL_Texture
+/*For rendering an object on to a texture: SDL_SetRenderTarget requires an SDL_Texture as an argument, so this function returns the SDL_Texture*/
 SDL_Texture* LTexture::getTexture() {
 	return mTexture;
 }
-*/
-#endif
