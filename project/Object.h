@@ -11,12 +11,14 @@ class Object {
 	public:
 		Object();
 		~Object();
-		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
+		virtual void display(SDL_Renderer* gRenderer, SDL_Texture* background) = 0;
 		void setY(int);
 		void setX(int);
 		void setSize(int);
+		int getX();
 		int getY();
-		void nextFrame();	// sets up position and scale of the next frame for the flex point
+		int getSize();
+		void nextFrame(); // sets up position and scale of the next frame for the flex point
 		int getFrame();
 	//	virtual void effect() = 0;
 	private:

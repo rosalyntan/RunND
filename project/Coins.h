@@ -11,6 +11,7 @@ class Coins : public Object {
 	public:
 		Coins();
 		~Coins();
+		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 	private:
 		int value;
 };

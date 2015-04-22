@@ -9,12 +9,11 @@ using namespace std;
 
 class Obstacle : public Object {
 	public:
-		Obstacle(int = 300);
+		Obstacle();
 		~Obstacle();
-		void effect();
+		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 	private:
-		int type;
-		int isEffect;
+		int slow;
 };
 
 #endif
