@@ -37,8 +37,16 @@ void Object::setSize(int s) {
 	size = s;
 }
 
+int Object::getX() {
+	return xPos;
+}
+
 int Object::getY() {
 	return yPos;
+}
+
+int Object::getSize() {
+	return size;
 }
 
 void Object::nextFrame() {
