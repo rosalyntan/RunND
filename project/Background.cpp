@@ -92,12 +92,20 @@ void Background::frames() { //display turn frames based on turn() function
 
 
 bool Background::lose(int userTurn) {
+	bool quit2 = false;
 	if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0))
-		quit = true;	
+		quit2 = true;	
 	else if ((numTurn == 15) && (userTurn != dirTurn))
-		quit = true;
+		quit2 = true;
 
-	return quit;
+	if (quit2) {
+		frameBack = 0;
+		dirTurn = 0;
+		prev = 0;
+		numTurn = 0;
+	}
+
+	return quit2;
 }
 
 int Background::getNumTurn() {
@@ -198,3 +206,6 @@ SDL_Texture* Background::getText() {
 	return gSpriteSheetTexture.getTexture();
 }
 
+void Background::resetNumTurn() {
+	numTurn = 0;
+}

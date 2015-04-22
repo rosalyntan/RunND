@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			bool start = false;
-		
+
 			//While application is running
 			while(true) {
 				start = false;
@@ -79,7 +79,8 @@ int main(int argc, char* argv[]) {
 				}
 				quit = false;
 				Object * a = new Object;
-				while(!quit) { 
+				back -> resetNumTurn();
+				while(!quit) {
 					if (SDL_PollEvent(&e)) {
 						if(e.type == SDL_KEYDOWN) {
 							switch(e.key.keysym.sym) { //switch case for key press
@@ -106,7 +107,7 @@ int main(int argc, char* argv[]) {
 						back -> turn(random);
 					}
 					back -> frames();
-					quit = back -> lose(userTurn);
+					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
 						userTurn = 0;
 					back -> display(400, 600, gRenderer);
@@ -149,7 +150,7 @@ int main(int argc, char* argv[]) {
 	close();
 
 	return 0;
-}
+} //end of main
 
 bool init() { //Initialize SDL window
 	//Initialization flag

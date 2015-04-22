@@ -19,13 +19,13 @@ class Background {
 		void display(int, int, SDL_Renderer*);
 		int getFrameBack();
 		SDL_Texture* getText();
+		void resetNumTurn();
 	private:
 		int frameBack;
 		int dirTurn;
 		int numTurn;
 		int prev;
 		SDL_Rect* currentClipBack;
-		bool quit;
 		SDL_Rect gBackClips[13];
 		LTexture gSpriteSheetTexture;
 };
