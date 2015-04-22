@@ -4,8 +4,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include <cstdlib>
-//#include <ctime>
 #include "LTexture.h"
 using namespace std;
 
@@ -22,15 +20,12 @@ class Background {
 		int getFrameBack();
 		SDL_Texture* getText();
 	private:
-		//int random; //random number generated for turn
-		//int difficulty; //used with random number generator, can be decreased to make game harder
 		int frameBack;
 		int dirTurn;
 		int numTurn;
 		int prev;
 		SDL_Rect* currentClipBack;
 		bool quit;
-//		int BACKGROUND_ANIMATION_FRAMES;
 		SDL_Rect gBackClips[13];
 		LTexture gSpriteSheetTexture;
 };

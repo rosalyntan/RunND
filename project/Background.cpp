@@ -1,20 +1,15 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include <cstdlib>
-//#include <ctime>
 #include "Background.h"
 #include "LTexture.h"
 using namespace std;
 
 Background::Background() {
-//	difficulty = 50;
 	frameBack = 0;
 	dirTurn = 0;
 	prev = 0;
 	numTurn = 0;
-//	LTexture gSpriteSheetTexture;
-//	BACKGROUND_ANIMATION_FRAMES = 13;
 }
 
 
@@ -23,9 +18,7 @@ Background::~Background() {
 }
 
 
-void Background::turn(int random) {
-	//random = rand() % difficulty; 
-
+void Background::turn(int random) { //use random number generated to determine which set of turn frames should be displayed
 	switch(random) {
 		case 1: //both turns
 			frameBack = 1;
@@ -50,7 +43,7 @@ void Background::turn(int random) {
 }
 
 
-void Background::frames() {
+void Background::frames() { //display turn frames based on turn() function
 	if (dirTurn == 2) { //both turns
 		if (numTurn < 16) {
 			currentClipBack = &gBackClips[frameBack/4 + 1];
@@ -104,9 +97,6 @@ bool Background::lose(int userTurn) {
 	else if ((numTurn == 15) && (userTurn != dirTurn))
 		quit = true;
 
-//	if (numTurn < 10)
-//	userTurn = 0;
-
 	return quit;
 }
 
@@ -117,12 +107,6 @@ int Background::getNumTurn() {
 bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	//Loading success flag
 	bool success = true;
-
-//	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-//	if(gRenderer == NULL) {
-//		cout << "Renderer could not be created. SDL Error: " << SDL_GetError() << endl;
-//		success = false;
-//	}
 
 	//Load background sprite sheet texture
 	if(!gSpriteSheetTexture.loadFromFile("Background_sprite.bmp", gRenderer)) {
@@ -202,7 +186,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	return success;
 }
 
-void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) {
+void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
 }
 
