@@ -78,7 +78,10 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				quit = false;
-				Object * a = new Object;
+				Object * coinA = new Object;
+				Object * coinB = new Object;
+				bool visibleCoinA = false;
+				bool visibleCoinB = false;
 				back -> resetNumTurn();
 				while(!quit) {
 					if (SDL_PollEvent(&e)) {
@@ -112,15 +115,36 @@ int main(int argc, char* argv[]) {
 						userTurn = 0;
 					back -> display(400, 600, gRenderer);
 
-					//call objects
-					if (back -> getFrameBack()%4==0) {
-						a -> nextFrame();
+					//call coinA
+					if ((random < 5) && (back -> getFrameBack())%16==0 && !visibleCoinA) {
+						//Object * coin = new Object;
+						visibleCoinA = true;
 					}
-					if (back -> getFrameBack()==0) {
-						delete a;
-						Object * a = new Object;
+					if (visibleCoinA) {
+						coinA -> nextFrame();
+						if (coinA -> getFrame() >= 15) {
+							//delete a;
+							visibleCoinA = false;
+						}
+						if (visibleCoinA) {
+							coinA -> display(gRenderer, (back -> getText()));
+						}
 					}
-					a -> display(gRenderer, (back -> getText()));
+					//call coinB
+					if ((random > 45) && (back -> getFrameBack())%16==0 && !visibleCoinB) {
+						//Object * coin = new Object;
+						visibleCoinB = true;
+					}
+					if (visibleCoinB) {
+						coinB -> nextFrame();
+						if (coinB -> getFrame() >= 15) {
+							//delete a;
+							visibleCoinB = false;
+						}
+						if (visibleCoinB) {
+							coinB -> display(gRenderer, (back -> getText()));
+						}
+					}
 
 					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					//sprite jumps when up arrow is pressed

@@ -17,11 +17,13 @@ class Object {
 		void setSize(int);
 		int getY();
 		void nextFrame();	// sets up position and scale of the next frame for the flex point
+		int getFrame();
 	//	virtual void effect() = 0;
 	private:
 		int xPos;
 		int yPos;
 		int size;
+		int frame;
 };
 
 #endif
