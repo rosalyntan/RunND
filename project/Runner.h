@@ -13,7 +13,7 @@ class Runner{
 		~Runner();
 		bool loadMedia(SDL_Renderer*, SDL_Window*);
 		void frames();
-		void display(int, int, SDL_Renderer*, int);
+		int display(int, int, SDL_Renderer*, int);
 	private:
 	 	int frameChar;
 		int jump;

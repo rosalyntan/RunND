@@ -53,7 +53,9 @@ void Runner::frames() {
 	}
 }
 
-void Runner::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer, int direction) {
+//originally a void function, returns direction now because direction needs to update in main also
+int Runner::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer, int direction) {
+	currentClipChar = &gCharClips[frameChar / 4];
 	if (direction == 1) {						
 		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
 		jump++;
@@ -64,5 +66,6 @@ void Runner::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRendere
 	}
 	else
 		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+	return direction;
 }
 

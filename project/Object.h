@@ -11,7 +11,7 @@ class Object {
 	public:
 		Object();
 		~Object();
-		virtual void display(SDL_Renderer* gRenderer, SDL_Texture* background) = 0;
+		virtual void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 		void setY(int);
 		void setX(int);
 		void setSize(int);

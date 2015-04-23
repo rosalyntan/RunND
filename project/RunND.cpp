@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
 					}
 
 					character -> frames();
-					character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
+					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
 
 //					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
 					//sprite jumps when up arrow is pressed
