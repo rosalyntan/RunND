@@ -24,28 +24,31 @@ void Background::turn(int random, int beginning) { //use random number generated
 			frameBack = 1;
 			dirTurn = 2;
 			prev = random;
-			//if (beginning < 50) {
-			//	dirTurn = 1;
-			//	prev = 4;
-			//}
+			if (beginning < 50) {
+				dirTurn = 1;
+				prev = 4;
+				frameBack = 0;
+			}
 			break;
 		case 2: //turn left
 			frameBack = 16;
 			dirTurn = 3;
 			prev = random;
-			//if (beginning < 50) {
-			//	dirTurn = 1;
-			//	prev = 4;
-			//}	
+			if (beginning < 50) {
+				dirTurn = 1;
+				prev = 4;
+				frameBack = 0;
+			}	
 			break;
 		case 3: //turn right
 			frameBack = 32;
 			dirTurn = 4;
 			prev = random;
-			//if (beginning < 50) {
-			//	dirTurn = 1;
-			//	prev = 4;
-			//}
+			if (beginning < 50) {
+				dirTurn = 1;
+				prev = 4;
+				frameBack = 0;
+			}
 			break;
 		default: //straight
 			dirTurn = 1;
