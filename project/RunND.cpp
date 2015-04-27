@@ -54,6 +54,7 @@ int main(int argc, char* argv[]) {
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			bool start = false;
+			int pause = 0;
 
 			//While application is running
 			while(true) {
@@ -98,6 +99,8 @@ int main(int argc, char* argv[]) {
 								case SDLK_RIGHT: //turn right
 									userTurn = 4;
 									break;
+								case SDLK_SPACE: //pause
+									pause = 2;	// has to be two because in while loop automatically enters the if statements the first time 
 							}
 						}
 						//User requests quit
@@ -105,7 +108,23 @@ int main(int argc, char* argv[]) {
 							return 0;
 						}
 					}
-				
+					
+					// pause game when space bar is pressed
+					while (pause) {
+						// create pause icon (a rectangle that says pause)
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x88, 0xFF, 0xFF);
+						SDL_Rect pauseIcon = {100, 250, 200, 100};
+						SDL_RenderFillRect(gRenderer, &pauseIcon);
+						SDL_SetRenderTarget(gRenderer, NULL);
+						SDL_RenderPresent(gRenderer);
+						if (SDL_PollEvent(&e)) {
+							if (e.type == SDL_QUIT) { return 0;}
+							if (e.key.keysym.sym == SDLK_SPACE) {
+								pause--;
+							}
+						}
+					}
+					
 					//calls to background function to display appropriate frames
 					if (back -> getNumTurn() == 0) {
 						random = rand() % difficulty;

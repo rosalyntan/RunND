@@ -57,7 +57,7 @@ void Object::nextFrame() {
 		setY(yPos+size*2);
 	}
 	if  (frame>=16) {
-			setSize(15);
+		setSize(15);
 		setX(200-size/2);
 		setY(300);
 		frame = 0;	
