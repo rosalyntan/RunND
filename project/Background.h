@@ -11,7 +11,7 @@ class Background {
 	public:
 		Background();
 		~Background();
-		void turn(int); //function replaces switch case that randomly generates turns
+		void turn(int, int); //function replaces switch case that randomly generates turns
 		void frames(); //determines what frames are shown depending on the results of turn() function
 		bool lose(int);
 		int getNumTurn();

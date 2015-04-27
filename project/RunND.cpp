@@ -58,6 +58,7 @@ int main(int argc, char* argv[]) {
 
 			//While application is running
 			while(true) {
+				int beginning = 0;
 				start = false;
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, back -> getText());
@@ -87,6 +88,7 @@ int main(int argc, char* argv[]) {
 				bool visibleCoinB = false;
 				back -> resetNumTurn();
 				while(!quit) {
+					if (beginning < 50) {beginning++;}
 					if (SDL_PollEvent(&e)) {
 						if(e.type == SDL_KEYDOWN) {
 							switch(e.key.keysym.sym) { //switch case for key press
@@ -128,7 +130,7 @@ int main(int argc, char* argv[]) {
 					//calls to background function to display appropriate frames
 					if (back -> getNumTurn() == 0) {
 						random = rand() % difficulty;
-						back -> turn(random);
+						back -> turn(random, beginning);
 					}
 					back -> frames();
 					quit = (back -> lose(userTurn));
