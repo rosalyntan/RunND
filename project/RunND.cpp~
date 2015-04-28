@@ -26,7 +26,6 @@ void close();
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 TTF_Font* scoreFont;
-TTF_Font* pauseFont;
 LTexture* gTextTexture;
 
 int main(int argc, char* argv[]) {
@@ -41,7 +40,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, scoreFont, pauseFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, scoreFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {

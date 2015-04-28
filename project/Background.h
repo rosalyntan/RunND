@@ -16,12 +16,14 @@ class Background {
 		void frames(); //determines what frames are shown depending on the results of turn() function
 		bool lose(int);
 		int getNumTurn();
-		bool loadMedia(SDL_Renderer*, SDL_Window*, TTF_Font*);
+		bool loadMedia(SDL_Renderer*, SDL_Window*, TTF_Font*, TTF_Font*);
 		void display(int, int, SDL_Renderer*);
+		void displayPause(SDL_Renderer* gRenderer); 
 		int getFrameBack();
-		SDL_Texture* getText();
-		TTF_Font* gFont; 
 		void resetNumTurn();
+		SDL_Texture* getText();
+		TTF_Font* scoreFont; 
+		TTF_Font* pauseFont;
 	private:
 		int frameBack;
 		int dirTurn;
@@ -31,6 +33,7 @@ class Background {
 		SDL_Rect gBackClips[13];
 		LTexture gSpriteSheetTexture;
 		LTexture ScoreTextTexture;
+		LTexture PauseTextTexture;
 };
 
 #endif

@@ -11,14 +11,17 @@ Background::Background() {
 	dirTurn = 1;
 	prev = 0;
 	numTurn = 0;
-	gFont = NULL; 
+	scoreFont = NULL; 
+	pauseFont = NULL;
 }
 
 
 Background::~Background() {
 	gSpriteSheetTexture.free(); 
-	TTF_CloseFont( gFont ); 
-	gFont = NULL; 
+	TTF_CloseFont( scoreFont ); 
+	scoreFont = NULL; 
+	TTF_CloseFont( pauseFont ); 
+	pauseFont = NULL; 
 }
 
 
@@ -131,7 +134,7 @@ int Background::getNumTurn() {
 	return numTurn;
 }
 
-bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Font* gFont) {
+bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Font* scoreFont, TTF_Font* pauseFont) {
 	//Loading success flag
 	bool success = true;
 
@@ -212,21 +215,35 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 	}
 
 	//Initialize Font
-	if( TTF_Init() == -1 ) { 
-		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() ); 
+	if(TTF_Init() == -1) { 
+		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
 		success = false; 
 	}
 	else {
-		 //Open the font 
-		gFont = TTF_OpenFont( "lazy.ttf", 28 ); 
-		if( gFont == NULL ) { 
-			printf( "Failed to load font. SDL_ttf Error: %s\n", TTF_GetError() ); 
+		//Display score 
+		scoreFont = TTF_OpenFont("lazy.ttf", 28); 
+		if(scoreFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 
 		} 
-		else { //Display score
-			SDL_Color textColor = { 100, 0, 0 }; 
-			if( !ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, gFont) ) { 
-				printf( "Failed to render text texture!\n" );
+		else {
+			SDL_Color textColor = {100, 0, 0}; 
+			if(!ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, scoreFont)) { 
+				printf("Failed to render score text texture!\n");
+				success = false; 
+			}  
+		}
+
+		//Display pause
+		pauseFont = TTF_OpenFont("lazy.ttf", 60); 
+		if(pauseFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+			success = false; 
+		} 
+		else {
+			SDL_Color textColor = {100, 0, 0}; 
+			if(!PauseTextTexture.loadFromRenderedText("PAUSE", textColor, gRenderer, pauseFont)) { 
+				printf("Failed to render pause text texture!\n");
 				success = false; 
 			} 
 		}
@@ -236,7 +253,11 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-	ScoreTextTexture.render(250, 15, 0, gRenderer );
+	ScoreTextTexture.render(250, 15, 0, gRenderer);
+}
+
+void Background::displayPause(SDL_Renderer* gRenderer) {
+	PauseTextTexture.render(125, 300, 0, gRenderer);
 }
 
 int Background::getFrameBack() {
