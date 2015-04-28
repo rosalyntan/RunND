@@ -211,7 +211,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		gBackClips[12].h = 600;
 	}
 
-	//Initialize SDL_ttf 
+	//Initialize Font
 	if( TTF_Init() == -1 ) { 
 		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() ); 
 		success = false; 
@@ -220,12 +220,12 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		 //Open the font 
 		gFont = TTF_OpenFont( "lazy.ttf", 28 ); 
 		if( gFont == NULL ) { 
-			printf( "Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError() ); 
+			printf( "Failed to load font. SDL_ttf Error: %s\n", TTF_GetError() ); 
 			success = false; 
 		} 
-		else { //Render text 
+		else { //Display score
 			SDL_Color textColor = { 100, 0, 0 }; 
-			if( !gTextTexture.loadFromRenderedText( "The quick brown fox jumps over the lazy dog", textColor, gRenderer, gFont) ) { 
+			if( !ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, gFont) ) { 
 				printf( "Failed to render text texture!\n" );
 				success = false; 
 			} 
@@ -236,7 +236,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-	gTextTexture.render( ( SCREEN_WIDTH - gTextTexture.getWidth() ) / 2, ( SCREEN_HEIGHT - gTextTexture.getHeight() ) / 2, 0, gRenderer );
+	ScoreTextTexture.render(250, 15, 0, gRenderer );
 }
 
 int Background::getFrameBack() {
