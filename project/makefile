@@ -6,7 +6,7 @@ FUNC2 = Coin
 FUNC3 = Obstacle
 FUNC4 = Background
 FUNC5 = Runner
-FLAGS = -lSDL2 -lSDL2_image
+FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 
 all: $(MAIN)
 

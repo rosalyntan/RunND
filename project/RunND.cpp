@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <cstdlib>
 #include <ctime>
 #include "LTexture.h"
@@ -24,6 +25,8 @@ void close();
 //Initialize window and renderer
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
+TTF_Font* gFont;
+LTexture* gTextTexture;
 
 //Animation
 //const int CHARACTER_ANIMATION_FRAMES = 4;
@@ -42,7 +45,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, gFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
@@ -310,4 +313,5 @@ void close() {
 	//Quit SDL subsystems
 	IMG_Quit(); 
 	SDL_Quit();
+	TTF_Quit();
 }
