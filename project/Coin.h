@@ -1,3 +1,5 @@
+// Inherited class from Object, class for coins along the path
+
 #ifndef COIN_H
 #define COIN_H
 
@@ -11,10 +13,10 @@ class Coin : public Object {
 	public:
 		Coin();
 		~Coin();
-		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
-		int effect(int);
+		void display(SDL_Renderer* gRenderer, SDL_Texture* background); // renders coins to the window
+		int effect(int); // increments the score when called
 	private:
-		int value;
+		int value; // how many points a coin gives when hit
 };
 
 #endif
