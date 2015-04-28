@@ -4,14 +4,17 @@
 #include "Coin.h"
 using namespace std;
 
+// default constructor, also calls base class constructor
 Coin::Coin() : Object() {
 	value = 2;	
 }
 
+// is this necessary?
 Coin::~Coin() {
 
 }
 
+// renders a yellow square to the game window
 void Coin::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_SetRenderTarget(gRenderer, background);
 	SDL_Rect fillRect = {Object::getX(), Object::getY(), Object::getSize(), Object::getSize()};
@@ -19,6 +22,7 @@ void Coin::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_RenderFillRect(gRenderer, &fillRect);
 }
 
+// score is sent in from main and incremented in this function, and then returned to main
 int Coin::effect(int score) {
 	score = score + value;
 	return score;

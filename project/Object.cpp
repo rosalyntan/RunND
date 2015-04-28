@@ -2,9 +2,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "Object.h"
-//#include "LTexture.h"
 using namespace std;
 
+// default constructor
 Object::Object() {
 	setSize(15);
 	setX(200-size/2);
@@ -12,31 +12,27 @@ Object::Object() {
 	frame = 0;
 }
 
+// is this necessary?
 Object::~Object() {
 
 }
 
-/*void Object::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
-	SDL_SetRenderTarget(gRenderer, background);
-	//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_Rect fillRect = {xPos, yPos, size, size};
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
-	SDL_RenderFillRect(gRenderer, &fillRect);
-	//SDL_RenderPresent(gRenderer);
-}*/
-
+// set y position of object
 void Object::setY(int y) {
 	yPos = y;
 }
 
+// set x position of object
 void Object::setX(int x) {
 	xPos = x;
 }
 
+// set size of object
 void Object::setSize(int s) {
 	size = s;
 }
 
+// get functions
 int Object::getX() {
 	return xPos;
 }
@@ -49,6 +45,8 @@ int Object::getSize() {
 	return size;
 }
 
+// increments frames
+// every four frames the object moves down the path and also becomes a little larger to simulate perspective
 void Object::nextFrame() {
 	frame++;
 	if (frame%4 == 0) {
@@ -64,6 +62,7 @@ void Object::nextFrame() {
 	}
 }
 
+// get function
 int Object::getFrame() {
 	return frame;
 }

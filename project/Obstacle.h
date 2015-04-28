@@ -1,3 +1,5 @@
+// Inherited class from Object, class for obstacles along the path
+
 #ifndef OBSTACLE_H
 #define OBSTACLE_H
 
@@ -11,10 +13,10 @@ class Obstacle : public Object {
 	public:
 		Obstacle();
 		~Obstacle();
-		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
-		int effect(int);
+		void display(SDL_Renderer* gRenderer, SDL_Texture* background); // renders obstacle to window
+		int effect(int); // decrements the score
 	private:
-		int value;
+		int value; // amount the score is decremented by when the character hits an obstacle
 };
 
 #endif
