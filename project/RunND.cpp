@@ -148,10 +148,14 @@ int main(int argc, char* argv[]) {
 					}
 					if (visibleCoinA) {
 						coinA -> nextFrame();
-						if (coinA -> getFrame() >= 15) {
-							//delete a;
-							visibleCoinA = false;
-							score = coinA -> effect(score);
+						// add another variable canIncrement
+						if(coinA -> getFrame() >= 12 && direction != 1) {
+							if(coinA -> getFrame() == 12)
+								score = coinA -> effect(score); // get it to only increment once 
+							else if (coinA -> getFrame() >= 15) {
+								//delete a;
+								visibleCoinA = false;
+							}
 						}
 						if (visibleCoinA) {
 							coinA -> display(gRenderer, (back -> getText()));
@@ -164,10 +168,13 @@ int main(int argc, char* argv[]) {
 					}
 					if (visibleCoinB) {
 						coinB -> nextFrame();
-						if (coinB -> getFrame() >= 15) {
-							//delete a;
-							visibleCoinB = false;
-							score = coinB -> effect(score);
+						if(coinB -> getFrame() >= 12 && direction != 1) {
+							if(coinB -> getFrame() == 12)
+								score = coinB -> effect(score);
+							else if (coinB -> getFrame() >= 15) {
+								//delete a;
+								visibleCoinB = false;
+							}
 						}
 						if (visibleCoinB) {
 							coinB -> display(gRenderer, (back -> getText()));
@@ -179,9 +186,12 @@ int main(int argc, char* argv[]) {
 					}
 					if(visibleObstacleA) {
 						obstacleA -> nextFrame();
-						if(obstacleA -> getFrame() >= 15) {
-							visibleObstacleA = false;
-							score = obstacleA -> effect(score);
+						if(obstacleA -> getFrame() >= 12 && direction != 1) {
+							if(obstacleA -> getFrame() == 12)
+								score = obstacleA -> effect(score);
+							if(obstacleA -> getFrame() >= 15) {
+								visibleObstacleA = false;
+							}
 						}
 						if(visibleObstacleA) {
 							obstacleA -> display(gRenderer, (back -> getText()));

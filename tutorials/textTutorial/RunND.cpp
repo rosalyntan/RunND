@@ -5,9 +5,11 @@
 #include <cstdlib>
 #include <ctime>
 #include "LTexture.h"
-//#include "Object.h"
+#include "Object.h"
+#include "Coin.h"
+#include "Obstacle.h"
 #include "Background.h"
-//#include "Runner.h"
+#include "Runner.h"
 using namespace std;
 
 const int SCREEN_WIDTH = 400;

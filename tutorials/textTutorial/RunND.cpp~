@@ -5,9 +5,9 @@
 #include <cstdlib>
 #include <ctime>
 #include "LTexture.h"
-//#include "Object.h"
+#include "Object.h"
 #include "Background.h"
-//#include "Runner.h"
+#include "Runner.h"
 using namespace std;
 
 const int SCREEN_WIDTH = 400;
@@ -23,6 +23,7 @@ void close();
 //Initialize window, renderer, and text font
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
+TTF_Font* gFont;
 LTexture* gTextTexture; //
 
 //Animation

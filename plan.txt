@@ -1,10 +1,10 @@
 To Do List (as of 4/26/2015 11:30 PM):
 
-T-instantiate obstacles/coins classes
+**T-instantiate obstacles/coins classes
 -can jump over obstacles and coins and they don't count
--more coins (but still randomly generated)
--place randomly generated obstacles (around the same number as coins we have now): -5 points?
--count number of coins: +2
+XX-more coins (but still randomly generated)
+**-place randomly generated obstacles (around the same number as coins we have now): -5 points?
+**-count number of coins: +2
 F-display points
 M-levels
 	1. go to domerfest (freshman)
@@ -13,9 +13,9 @@ M-levels
 	4. go to the dome (senior/graduation)
 -100 points to win a level
 F-text on start screen/winning level
--start and end a level with a straight path
--remove all runner elements from RunND.cpp (things that are now in the runner class)
--clean LTexture.h
+**-start and end a level with a straight path
+**-remove all runner elements from RunND.cpp (things that are now in the runner class)
+**-clean LTexture.h
 
 
 
