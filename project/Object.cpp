@@ -16,14 +16,14 @@ Object::~Object() {
 
 }
 
-void Object::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
+/*void Object::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_SetRenderTarget(gRenderer, background);
 	//SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_Rect fillRect = {xPos, yPos, size, size};
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
 	SDL_RenderFillRect(gRenderer, &fillRect);
 	//SDL_RenderPresent(gRenderer);
-}
+}*/
 
 void Object::setY(int y) {
 	yPos = y;

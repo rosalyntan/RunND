@@ -5,6 +5,8 @@
 #include <ctime>
 #include "LTexture.h"
 #include "Object.h"
+#include "Coin.h"
+#include "Obstacle.h"
 #include "Background.h"
 #include "Runner.h"
 using namespace std;
@@ -32,6 +34,7 @@ int main(int argc, char* argv[]) {
 	srand(time(NULL));
 	Background * back = new Background;  //Initialize call to background class
 	Runner * character = new Runner;
+	int score;
 
 	//Start up SDL and create window
 	if(!init()) {
@@ -60,6 +63,7 @@ int main(int argc, char* argv[]) {
 			while(true) {
 				int beginning = 0;
 				start = false;
+				score = 10;
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, back -> getText());
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
@@ -82,10 +86,12 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				quit = false;
-				Object * coinA = new Object;
-				Object * coinB = new Object;
+				Coin* coinA = new Coin;
+				Coin* coinB = new Coin;
+				Obstacle* obstacleA = new Obstacle;
 				bool visibleCoinA = false;
 				bool visibleCoinB = false;
+				bool visibleObstacleA = false;
 				back -> resetNumTurn();
 				while(!quit) {
 					if (beginning < 50) {beginning++;}
@@ -148,6 +154,7 @@ int main(int argc, char* argv[]) {
 						if (coinA -> getFrame() >= 15) {
 							//delete a;
 							visibleCoinA = false;
+							score = coinA -> effect(score);
 						}
 						if (visibleCoinA) {
 							coinA -> display(gRenderer, (back -> getText()));
@@ -163,9 +170,24 @@ int main(int argc, char* argv[]) {
 						if (coinB -> getFrame() >= 15) {
 							//delete a;
 							visibleCoinB = false;
+							score = coinB -> effect(score);
 						}
 						if (visibleCoinB) {
 							coinB -> display(gRenderer, (back -> getText()));
+						}
+					}
+					//call obstacleA
+					if((random > 20 && random <= 25) && (back -> getFrameBack())%16 == 0 && !visibleObstacleA) {
+						visibleObstacleA = true;
+					}
+					if(visibleObstacleA) {
+						obstacleA -> nextFrame();
+						if(obstacleA -> getFrame() >= 15) {
+							visibleObstacleA = false;
+							score = obstacleA -> effect(score);
+						}
+						if(visibleObstacleA) {
+							obstacleA -> display(gRenderer, (back -> getText()));
 						}
 					}
 
@@ -193,6 +215,7 @@ int main(int argc, char* argv[]) {
 					}*/
 					SDL_RenderPresent(gRenderer);
 				}
+				cout << score << endl; // delete later
 			}
 		}
 	}
@@ -200,6 +223,8 @@ int main(int argc, char* argv[]) {
 	delete back;
 	delete character;
 	close();
+
+//	cout << "This is the score: " << score << endl;
 
 	return 0;
 } //end of main
