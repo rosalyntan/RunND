@@ -157,6 +157,11 @@ int main(int argc, char* argv[]) {
 								visibleCoinA = false;
 							}
 						}
+						else if(coinA -> getFrame() >= 12 && direction == 1) {
+							if(coinA -> getFrame() >= 15) {
+								visibleCoinA = false;
+							}
+						}
 						if (visibleCoinA) {
 							coinA -> display(gRenderer, (back -> getText()));
 						}
@@ -176,6 +181,11 @@ int main(int argc, char* argv[]) {
 								visibleCoinB = false;
 							}
 						}
+						else if(coinB -> getFrame() >= 12 && direction == 1) {
+							if(coinB -> getFrame() >= 15) {
+								visibleCoinB = false;
+							}
+						}
 						if (visibleCoinB) {
 							coinB -> display(gRenderer, (back -> getText()));
 						}
@@ -189,6 +199,11 @@ int main(int argc, char* argv[]) {
 						if(obstacleA -> getFrame() >= 12 && direction != 1) {
 							if(obstacleA -> getFrame() == 12)
 								score = obstacleA -> effect(score);
+							else if(obstacleA -> getFrame() >= 15) {
+								visibleObstacleA = false;
+							}
+						}
+						else if(obstacleA -> getFrame() >= 12 && direction == 1) {
 							if(obstacleA -> getFrame() >= 15) {
 								visibleObstacleA = false;
 							}
