@@ -25,8 +25,6 @@ void close();
 //Initialize window and renderer
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
-TTF_Font* scoreFont;
-TTF_Font* pauseFont;
 LTexture* gTextTexture;
 
 int main(int argc, char* argv[]) {
@@ -41,12 +39,14 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, score, scoreFont, pauseFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
 			//Main loop flag
 			bool quit = false;
+
+			//back -> loadFont(gRenderer, score);
 
 			SDL_Event e; //Event handler
 			int direction = 0;
@@ -58,10 +58,10 @@ int main(int argc, char* argv[]) {
 
 			//While application is running
 			while(true) {
+			//	back -> loadFont(gRenderer, score);
 				int beginning = 0;
 				start = false;
 				score = 10;
-				back -> loadText(gRenderer, gWindow, score, scoreFont, pauseFont);
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, back -> getText());
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
@@ -92,6 +92,7 @@ int main(int argc, char* argv[]) {
 				bool visibleObstacleA = false;
 				back -> resetNumTurn();
 				while(!quit) {
+					back -> loadFont(gRenderer, score);
 					if (beginning < 50) {beginning++;}
 					if (SDL_PollEvent(&e)) {
 						if(e.type == SDL_KEYDOWN) {
@@ -142,7 +143,7 @@ int main(int argc, char* argv[]) {
 					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
 						userTurn = 0;
-					back -> display(400, 600, gRenderer);
+					back -> display(400, 600, score, gRenderer);
 
 					//call coinA
 					if ((random < 5) && (back -> getFrameBack())%16==0 && !visibleCoinA) {

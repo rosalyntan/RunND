@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <sstream> //int to string
 #include "Background.h"
 #include "LTexture.h"
 using namespace std;
@@ -134,7 +135,7 @@ int Background::getNumTurn() {
 	return numTurn;
 }
 
-bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, int score, TTF_Font* scoreFont, TTF_Font* pauseFont) {
+bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	//Loading success flag
 	bool success = true;
 
@@ -213,46 +214,10 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, int sco
 		gBackClips[12].w = 400;
 		gBackClips[12].h = 600;
 	}
-
-/*	//change printf to cout
-	//Initialize Font
-	if(TTF_Init() == -1) { 
-		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
-		success = false; 
-	}
-	else {
-		//Display score 
-		scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
-		if(scoreFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
-			success = false; 
-		} 
-		else {
-			SDL_Color textColor = {16, 46, 106}; 
-			if(!ScoreTextTexture.loadFromRenderedText("Score: ", textColor, gRenderer, scoreFont)) { 
-				printf("Failed to render score text texture!\n");
-				success = false; 
-			} 
-		}
-
-		//Display pause
-		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
-		if(pauseFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
-			success = false; 
-		} 
-		else {
-			SDL_Color textColor = {158, 131, 70}; 
-			if(!PauseTextTexture.loadFromRenderedText("PAUSE", textColor, gRenderer, pauseFont)) { 
-				printf("Failed to render pause text texture!\n");
-				success = false; 
-			} 
-		}
-	} */
 	return success;
 }
 
-void Background::loadText(SDL_Renderer* gRenderer, SDL_Window* gWindow, int score, TTF_Font* scoreFont, TTF_Font* pauseFont) {
+void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 	
 	//change printf to cout
 	//Initialize Font
@@ -260,35 +225,32 @@ void Background::loadText(SDL_Renderer* gRenderer, SDL_Window* gWindow, int scor
 		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
 	}
 	else {
+
+		//Set pause font and text
+		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
+		if(pauseFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+		} 
+		SDL_Color pauseColor = {158, 131, 70}; 
+		PauseTextTexture.loadFromRenderedText("PAUSE", pauseColor, gRenderer, pauseFont); 
+
 		//Display score 
 		scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 		} 
-		else {
-			SDL_Color textColor = {16, 46, 106}; 
-			if(!ScoreTextTexture.loadFromRenderedText("Score: ", textColor, gRenderer, scoreFont)) { 
-				printf("Failed to render score text texture!\n");
-			} 
-		}
-
-		//Display pause
-		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
-		if(pauseFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
-		} 
-		else {
-			SDL_Color textColor = {158, 131, 70}; 
-			if(!PauseTextTexture.loadFromRenderedText("PAUSE", textColor, gRenderer, pauseFont)) { 
-				printf("Failed to render pause text texture!\n");
-			} 
-		}
+		SDL_Color scoreColor = {16, 46, 106}; 
+		string scoreString = static_cast<ostringstream*>( &(ostringstream() << score) ) ->str();
+		ScoreTextTexture.loadFromRenderedText("Score: " + scoreString, scoreColor, gRenderer, scoreFont); 
 	} 
 }
 
-void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
-	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
-	ScoreTextTexture.render(250, 15, 0, gRenderer);
+void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Renderer* gRenderer) { //render texture frame to window
+	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer); 
+//	SDL_Color scoreColor = {16, 46, 106}; 
+//	string scoreString = static_cast<ostringstream*>( &(ostringstream() << score) ) ->str();
+//	ScoreTextTexture.loadFromRenderedText("Score: " + scoreString, scoreColor, gRenderer, scoreFont); 
+	ScoreTextTexture.render(275, 0, 0, gRenderer);
 }
 
 void Background::displayPause(SDL_Renderer* gRenderer) {
