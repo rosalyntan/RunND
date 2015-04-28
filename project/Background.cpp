@@ -134,7 +134,7 @@ int Background::getNumTurn() {
 	return numTurn;
 }
 
-bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Font* scoreFont, TTF_Font* pauseFont) {
+bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, int score, TTF_Font* scoreFont, TTF_Font* pauseFont) {
 	//Loading success flag
 	bool success = true;
 
@@ -214,6 +214,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		gBackClips[12].h = 600;
 	}
 
+/*	//change printf to cout
 	//Initialize Font
 	if(TTF_Init() == -1) { 
 		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
@@ -221,17 +222,17 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 	}
 	else {
 		//Display score 
-		scoreFont = TTF_OpenFont("Aparajita.ttf", 28); 
+		scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 
 		} 
 		else {
-			SDL_Color textColor = {100, 0, 0}; 
-			if(!ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, scoreFont)) { 
+			SDL_Color textColor = {16, 46, 106}; 
+			if(!ScoreTextTexture.loadFromRenderedText("Score: ", textColor, gRenderer, scoreFont)) { 
 				printf("Failed to render score text texture!\n");
 				success = false; 
-			}  
+			} 
 		}
 
 		//Display pause
@@ -241,14 +242,48 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 			success = false; 
 		} 
 		else {
-			SDL_Color textColor = {100, 0, 0}; 
+			SDL_Color textColor = {158, 131, 70}; 
 			if(!PauseTextTexture.loadFromRenderedText("PAUSE", textColor, gRenderer, pauseFont)) { 
 				printf("Failed to render pause text texture!\n");
 				success = false; 
 			} 
 		}
-	} 
+	} */
 	return success;
+}
+
+void Background::loadText(SDL_Renderer* gRenderer, SDL_Window* gWindow, int score, TTF_Font* scoreFont, TTF_Font* pauseFont) {
+	
+	//change printf to cout
+	//Initialize Font
+	if(TTF_Init() == -1) { 
+		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
+	}
+	else {
+		//Display score 
+		scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
+		if(scoreFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+		} 
+		else {
+			SDL_Color textColor = {16, 46, 106}; 
+			if(!ScoreTextTexture.loadFromRenderedText("Score: ", textColor, gRenderer, scoreFont)) { 
+				printf("Failed to render score text texture!\n");
+			} 
+		}
+
+		//Display pause
+		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
+		if(pauseFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+		} 
+		else {
+			SDL_Color textColor = {158, 131, 70}; 
+			if(!PauseTextTexture.loadFromRenderedText("PAUSE", textColor, gRenderer, pauseFont)) { 
+				printf("Failed to render pause text texture!\n");
+			} 
+		}
+	} 
 }
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
@@ -257,7 +292,7 @@ void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRen
 }
 
 void Background::displayPause(SDL_Renderer* gRenderer) {
-	PauseTextTexture.render(125, 300, 0, gRenderer);
+	PauseTextTexture.render(125, 275, 0, gRenderer);
 }
 
 int Background::getFrameBack() {

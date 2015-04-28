@@ -26,6 +26,7 @@ void close();
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 TTF_Font* scoreFont;
+TTF_Font* pauseFont;
 LTexture* gTextTexture;
 
 int main(int argc, char* argv[]) {
@@ -40,7 +41,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, scoreFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, score, scoreFont, pauseFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
@@ -60,6 +61,7 @@ int main(int argc, char* argv[]) {
 				int beginning = 0;
 				start = false;
 				score = 10;
+				back -> loadText(gRenderer, gWindow, score, scoreFont, pauseFont)
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, back -> getText());
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
@@ -116,10 +118,12 @@ int main(int argc, char* argv[]) {
 					// pause game when space bar is pressed
 					while (pause) {
 						// create pause icon (a rectangle that says pause)
-						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x88, 0xFF, 0xFF);
+					//	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x9E, 0x83, 0x46); //gold box
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
 						SDL_Rect pauseIcon = {100, 250, 200, 100};
 						SDL_RenderFillRect(gRenderer, &pauseIcon);
 						SDL_SetRenderTarget(gRenderer, NULL);
+						back -> displayPause(gRenderer);
 						SDL_RenderPresent(gRenderer);
 						if (SDL_PollEvent(&e)) {
 							if (e.type == SDL_QUIT) { return 0;}
@@ -147,10 +151,19 @@ int main(int argc, char* argv[]) {
 					}
 					if (visibleCoinA) {
 						coinA -> nextFrame();
-						if (coinA -> getFrame() >= 15) {
-							//delete a;
-							visibleCoinA = false;
-							score = coinA -> effect(score);
+						// add another variable canIncrement
+						if(coinA -> getFrame() >= 12 && direction != 1) {
+							if(coinA -> getFrame() == 12)
+								score = coinA -> effect(score); // get it to only increment once 
+							else if (coinA -> getFrame() >= 15) {
+								//delete a;
+								visibleCoinA = false;
+							}
+						}
+						else if(coinA -> getFrame() >= 12 && direction == 1) {
+							if(coinA -> getFrame() >= 15) {
+								visibleCoinA = false;
+							}
 						}
 						if (visibleCoinA) {
 							coinA -> display(gRenderer, (back -> getText()));
@@ -163,10 +176,18 @@ int main(int argc, char* argv[]) {
 					}
 					if (visibleCoinB) {
 						coinB -> nextFrame();
-						if (coinB -> getFrame() >= 15) {
-							//delete a;
-							visibleCoinB = false;
-							score = coinB -> effect(score);
+						if(coinB -> getFrame() >= 12 && direction != 1) {
+							if(coinB -> getFrame() == 12)
+								score = coinB -> effect(score);
+							else if (coinB -> getFrame() >= 15) {
+								//delete a;
+								visibleCoinB = false;
+							}
+						}
+						else if(coinB -> getFrame() >= 12 && direction == 1) {
+							if(coinB -> getFrame() >= 15) {
+								visibleCoinB = false;
+							}
 						}
 						if (visibleCoinB) {
 							coinB -> display(gRenderer, (back -> getText()));
@@ -178,9 +199,17 @@ int main(int argc, char* argv[]) {
 					}
 					if(visibleObstacleA) {
 						obstacleA -> nextFrame();
-						if(obstacleA -> getFrame() >= 15) {
-							visibleObstacleA = false;
-							score = obstacleA -> effect(score);
+						if(obstacleA -> getFrame() >= 12 && direction != 1) {
+							if(obstacleA -> getFrame() == 12)
+								score = obstacleA -> effect(score);
+							else if(obstacleA -> getFrame() >= 15) {
+								visibleObstacleA = false;
+							}
+						}
+						else if(obstacleA -> getFrame() >= 12 && direction == 1) {
+							if(obstacleA -> getFrame() >= 15) {
+								visibleObstacleA = false;
+							}
 						}
 						if(visibleObstacleA) {
 							obstacleA -> display(gRenderer, (back -> getText()));

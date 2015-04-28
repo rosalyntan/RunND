@@ -16,7 +16,8 @@ class Background {
 		void frames(); //determines what frames are shown depending on the results of turn() function
 		bool lose(int);
 		int getNumTurn();
-		bool loadMedia(SDL_Renderer*, SDL_Window*, TTF_Font*, TTF_Font*);
+		bool loadMedia(SDL_Renderer*, SDL_Window*, int, TTF_Font*, TTF_Font*);
+		void loadText(SDL_Renderer*, SDL_Window*, int, TTF_Font*, TTF_Font*);
 		void display(int, int, SDL_Renderer*);
 		void displayPause(SDL_Renderer* gRenderer); 
 		int getFrameBack();

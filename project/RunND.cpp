@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, scoreFont, pauseFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow, score, scoreFont, pauseFont)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
@@ -61,6 +61,7 @@ int main(int argc, char* argv[]) {
 				int beginning = 0;
 				start = false;
 				score = 10;
+				back -> loadText(gRenderer, gWindow, score, scoreFont, pauseFont);
 				while(!start) {
 					SDL_SetRenderTarget(gRenderer, back -> getText());
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
@@ -117,10 +118,12 @@ int main(int argc, char* argv[]) {
 					// pause game when space bar is pressed
 					while (pause) {
 						// create pause icon (a rectangle that says pause)
-						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x88, 0xFF, 0xFF);
+					//	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x9E, 0x83, 0x46); //gold box
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
 						SDL_Rect pauseIcon = {100, 250, 200, 100};
 						SDL_RenderFillRect(gRenderer, &pauseIcon);
 						SDL_SetRenderTarget(gRenderer, NULL);
+						back -> displayPause(gRenderer);
 						SDL_RenderPresent(gRenderer);
 						if (SDL_PollEvent(&e)) {
 							if (e.type == SDL_QUIT) { return 0;}
