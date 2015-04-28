@@ -220,14 +220,15 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		success = false; 
 	}
 	else {
+		TTF_SetFontStyle("Aparajita.ttf", TTF_STYLE_BOLD );
 		//Display score 
-		scoreFont = TTF_OpenFont("lazy.ttf", 28); 
+		scoreFont = TTF_OpenFont("Aparajita.ttf", 28); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 
 		} 
 		else {
-			SDL_Color textColor = {100, 0, 0 ; 
+			SDL_Color textColor = {100, 0, 0}; 
 			if(!ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, scoreFont)) { 
 				printf("Failed to render score text texture!\n");
 				success = false; 
@@ -235,7 +236,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		}
 
 		//Display pause
-		pauseFont = TTF_OpenFont("lazy.ttf", 60); 
+		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
 		if(pauseFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 

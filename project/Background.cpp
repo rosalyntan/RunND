@@ -221,7 +221,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 	}
 	else {
 		//Display score 
-		scoreFont = TTF_OpenFont("lazy.ttf", 28); 
+		scoreFont = TTF_OpenFont("Aparajita.ttf", 28); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 
@@ -235,7 +235,7 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Fon
 		}
 
 		//Display pause
-		pauseFont = TTF_OpenFont("lazy.ttf", 60); 
+		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
 		if(pauseFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 			success = false; 
