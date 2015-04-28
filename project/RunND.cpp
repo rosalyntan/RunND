@@ -28,11 +28,6 @@ SDL_Renderer* gRenderer = NULL;
 TTF_Font* gFont;
 LTexture* gTextTexture;
 
-//Animation
-//const int CHARACTER_ANIMATION_FRAMES = 4;
-//SDL_Rect gCharClips[CHARACTER_ANIMATION_FRAMES];
-//LTexture gCharacterTexture;
-
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
 	Background * back = new Background;  //Initialize call to background class
@@ -53,9 +48,7 @@ int main(int argc, char* argv[]) {
 			bool quit = false;
 
 			SDL_Event e; //Event handler
-//		 	int frameChar = 0;
 			int direction = 0;
-//			int jump = 0;
 			int random = 0;
 			int userTurn = 0;
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
@@ -197,25 +190,6 @@ int main(int argc, char* argv[]) {
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
 
-//					SDL_Rect* currentClipChar = &gCharClips[frameChar / CHARACTER_ANIMATION_FRAMES];
-					//sprite jumps when up arrow is pressed
-/*					if (direction == 1) {						
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
-						jump++;
-						if (jump > 4) {
-							direction = 0;
-							jump = 0;
-						}
-					}
-					else
-						gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
-
-*/
-					//continuously cycle through all frames for character sprite
-/*					++frameChar;
-					if(frameChar/CHARACTER_ANIMATION_FRAMES >= CHARACTER_ANIMATION_FRAMES) {
-						frameChar = 0;
-					}*/
 					SDL_RenderPresent(gRenderer);
 				}
 				cout << score << endl; // delete later
@@ -226,8 +200,6 @@ int main(int argc, char* argv[]) {
 	delete back;
 	delete character;
 	close();
-
-//	cout << "This is the score: " << score << endl;
 
 	return 0;
 } //end of main
@@ -270,39 +242,11 @@ bool loadMedia() {
 		success = false;
 	}
 
-/*	//Load character sprite sheet texture
-	if(!gCharacterTexture.loadFromFile("Character_Sprite.png", gRenderer)) {
-		cout << "Failed to load animation texture" << endl;
-		success = false;
-	}
-	else {
-		gCharClips[0].x = 0;
-		gCharClips[0].y = 0;
-		gCharClips[0].w = 80;
-		gCharClips[0].h = 150;
-
-		gCharClips[1].x = 150;
-		gCharClips[1].y = 0;
-		gCharClips[1].w = 80;
-		gCharClips[1].h = 150;
-
-		gCharClips[2].x = 300;
-		gCharClips[2].y = 0;
-		gCharClips[2].w = 80;
-		gCharClips[2].h = 150;
-
-		gCharClips[3].x = 450;
-		gCharClips[3].y = 0;
-		gCharClips[3].w = 80;
-		gCharClips[3].h = 150;
-	}*/
 	return success;
 }
 
 void close() {
 	
-//	gCharacterTexture.free(); 
-
 	SDL_DestroyRenderer(gRenderer); 
 	gRenderer=NULL; 
 
