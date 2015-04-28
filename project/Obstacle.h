@@ -12,7 +12,7 @@ class Obstacle : public Object {
 		Obstacle();
 		~Obstacle();
 		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
-		void effect();
+		int effect(int);
 	private:
 		int value;
 };

@@ -19,6 +19,7 @@ void Coin::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_RenderFillRect(gRenderer, &fillRect);
 }
 
-void Coin::effect() {
-	
+int Coin::effect(int score) {
+	score = score + value;
+	return score;
 }

@@ -20,7 +20,7 @@ class Object {
 		int getSize();
 		void nextFrame(); // sets up position and scale of the next frame for the flex point
 		int getFrame();
-		virtual void effect() = 0;
+		virtual int effect(int) = 0;
 	private:
 		int xPos;
 		int yPos;

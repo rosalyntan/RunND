@@ -19,6 +19,7 @@ void Obstacle::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_RenderFillRect(gRenderer, &fillRect);
 }
 
-void Obstacle::effect() {
-
+int Obstacle::effect(int score) {
+	score = score - value;
+	return score;
 }
