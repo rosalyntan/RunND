@@ -122,7 +122,7 @@ bool loadMedia() {
 	bool success = true;
 
 	//Load default surface
-	gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("press.bmp");
+	gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("Background_B1.bmp");
 	if(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
 		cout << "Failed to load default image." << endl;
 		success = false;

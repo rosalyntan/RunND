@@ -14,6 +14,8 @@ M-levels
 -100 points to win a level
 F-text on start screen/winning level
 -start and end a level with a straight path
+-remove all runner elements from RunND.cpp (things that are now in the runner class)
+-clean LTexture.h
 
 
 
