@@ -1,3 +1,5 @@
+// Class for the running character
+
 #ifndef RUNNER_H
 #define RUNNER_H
 
