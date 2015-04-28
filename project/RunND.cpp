@@ -5,6 +5,8 @@
 #include <ctime>
 #include "LTexture.h"
 #include "Object.h"
+#include "Coin.h"
+#include "Obstacle.h"
 #include "Background.h"
 #include "Runner.h"
 using namespace std;
@@ -82,8 +84,8 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				quit = false;
-				Object * coinA = new Object;
-				Object * coinB = new Object;
+				Coin* coinA = new Coin;
+				Obstacle* coinB = new Obstacle;
 				bool visibleCoinA = false;
 				bool visibleCoinB = false;
 				back -> resetNumTurn();

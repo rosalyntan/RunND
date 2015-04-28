@@ -1,5 +1,5 @@
-#ifndef OBSTACLE_H
-#define OBSTACLE_H
+#ifndef COIN_H
+#define COIN_H
 
 #include <iostream>
 #include <SDL2/SDL.h>
@@ -7,10 +7,10 @@
 #include "Object.h"
 using namespace std;
 
-class Obstacle : public Object {
+class Coin : public Object {
 	public:
-		Obstacle();
-		~Obstacle();
+		Coin();
+		~Coin();
 		void display(SDL_Renderer* gRenderer, SDL_Texture* background);
 		void effect();
 	private:
