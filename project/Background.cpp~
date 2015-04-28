@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "Background.h"
 #include "LTexture.h"
 using namespace std;
@@ -10,11 +11,14 @@ Background::Background() {
 	dirTurn = 1;
 	prev = 0;
 	numTurn = 0;
+	gFont = NULL; 
 }
 
 
 Background::~Background() {
 	gSpriteSheetTexture.free(); 
+	TTF_CloseFont( gFont ); 
+	gFont = NULL; 
 }
 
 
@@ -27,6 +31,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 			if (beginning < 50) {
 				dirTurn = 1;
 				prev = 4;
+				frameBack = 0;
 			}
 			break;
 		case 2: //turn left
@@ -36,6 +41,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 			if (beginning < 50) {
 				dirTurn = 1;
 				prev = 4;
+				frameBack = 0;
 			}	
 			break;
 		case 3: //turn right
@@ -45,6 +51,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 			if (beginning < 50) {
 				dirTurn = 1;
 				prev = 4;
+				frameBack = 0;
 			}
 			break;
 		default: //straight
@@ -124,7 +131,7 @@ int Background::getNumTurn() {
 	return numTurn;
 }
 
-bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
+bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Font* gFont) {
 	//Loading success flag
 	bool success = true;
 
@@ -203,11 +210,33 @@ bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 		gBackClips[12].w = 400;
 		gBackClips[12].h = 600;
 	}
+
+	//Initialize Font
+	if( TTF_Init() == -1 ) { 
+		printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() ); 
+		success = false; 
+	}
+	else {
+		 //Open the font 
+		gFont = TTF_OpenFont( "lazy.ttf", 28 ); 
+		if( gFont == NULL ) { 
+			printf( "Failed to load font. SDL_ttf Error: %s\n", TTF_GetError() ); 
+			success = false; 
+		} 
+		else { //Display score
+			SDL_Color textColor = { 100, 0, 0 }; 
+			if( !ScoreTextTexture.loadFromRenderedText("Score:", textColor, gRenderer, gFont) ) { 
+				printf( "Failed to render text texture!\n" );
+				success = false; 
+			} 
+		}
+	} 
 	return success;
 }
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer);
+	ScoreTextTexture.render(200, 15, 0, gRenderer );
 }
 
 int Background::getFrameBack() {

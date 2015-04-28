@@ -30,7 +30,7 @@ class Background {
 		SDL_Rect* currentClipBack;
 		SDL_Rect gBackClips[13];
 		LTexture gSpriteSheetTexture;
-		LTexture ScoreTextTexture;
+		LTexture gTextTexture;
 };
 
 #endif
