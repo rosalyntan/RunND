@@ -251,7 +251,7 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 
 		//Display score 
 		if(scoreFont == NULL)
-			scoreFont = TTF_OpenFont("Aparajita.ttf", 50); 
+			scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 		} 

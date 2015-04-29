@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 			while(true) {
 				int beginning = 0;
 				start = false;
-				score = 10;
+				score = 0;
 				while(!start) {
 					if (back -> getNumTurn() == 0) {
 						random = rand() % 10;
@@ -230,6 +230,9 @@ int main(int argc, char* argv[]) {
 							obstacleA -> display(gRenderer, (back -> getText()));
 						}
 					}
+
+					if (score < 0) //can't have a negative score
+						quit = true;
 
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);

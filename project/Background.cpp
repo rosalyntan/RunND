@@ -263,7 +263,7 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer); 
-	ScoreTextTexture.render(275, 0, 0, gRenderer);
+	ScoreTextTexture.render(255, 0, 0, gRenderer);
 }
 
 void Background::displayStart(SDL_Renderer* gRenderer) {
