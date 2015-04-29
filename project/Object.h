@@ -11,25 +11,31 @@ using namespace std;
 
 class Object {
 	public:
-		Object();
+		Object(int, int);
 		~Object(); // is this necessary?
 		virtual void display(SDL_Renderer* gRenderer, SDL_Texture* background) = 0; // pure virtual function to render objects to window
 		// set functions to set x and y coordinates and size
 		void setY(int);
 		void setX(int);
-		void setSize(int);
+		void setW(int);
+		void setH(int);
+		void setScale(int);
 		// get functions
 		int getX();
 		int getY();
-		int getSize();
+		int getW();
+		int getH();
+		int getScale();
 		void nextFrame(); // sets up position and scale of the next frame for the flex point
 		int getFrame();
 		virtual int effect(int) = 0; // pure virtual function that increments/decrements score based on what kind of object it is
 	private:
 		int xPos; // x position
 		int yPos; // y position
-		int size; 
+		int width;
+		int height; 
 		int frame;
+		int scale;
 };
 
 #endif
