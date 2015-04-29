@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 						random = rand() % 10;
 						back -> turn(random, beginning);
 					}
-					back -> frames();
+					back -> frames(win);
 					back -> display(400, 600, score, gRenderer);
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
 						random = rand() % difficulty;
 						back -> turn(random, beginning);
 					}
-					back -> frames();
+					back -> frames(win);
 					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
 						userTurn = 0;

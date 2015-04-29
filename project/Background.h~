@@ -13,7 +13,7 @@ class Background {
 		Background();
 		~Background();
 		void turn(int, int); //function replaces switch case that randomly generates turns
-		void frames(int); //determines what frames are shown depending on the results of turn() function
+		void frames(); //determines what frames are shown depending on the results of turn() function
 		void framesLevel(int);
 		bool lose(int);
 		int getNumTurn();

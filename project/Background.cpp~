@@ -118,9 +118,7 @@ void Background::frames(int win) { //display turn frames based on turn() functio
 		numTurn = 0;
 		dirTurn = 1;
 	}
-	else if (win == 1) {
-		currentClipBack = &LevelClips[frameBack/4 + 1];
-	}
+	else if (
 }
 
 

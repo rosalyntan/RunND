@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 						random = rand() % 10;
 						back -> turn(random, beginning);
 					}
-					back -> frames();
+					back -> frames(win);
 					back -> display(400, 600, score, gRenderer);
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
@@ -240,7 +240,7 @@ int main(int argc, char* argv[]) {
 						int levelFrame = level;
 						for (int frame=0; frame <4; frame++) {
 							back -> loadLevel(gRenderer, levelFrame);
-							back -> framesLevel(level);
+							back -> framesLevel(levelFrame);
 							back -> displayLevel(400, 600, gRenderer);
 							levelFrame++;
 						}
