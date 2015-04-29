@@ -251,7 +251,7 @@ int main(int argc, char* argv[]) {
 
 					if (score < 0) //can't have a negative score
 						quit = true;
-					else if (score >= 10) //completes level after getting 100 points
+					else if (score >= 25) //completes level after getting 100 points
 						win = 1;
 
 					character -> frames();
