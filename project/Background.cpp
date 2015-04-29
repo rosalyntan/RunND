@@ -15,6 +15,7 @@ Background::Background() {
 	scoreFont = NULL; 
 	pauseFont = NULL;
 	startFont = NULL;
+	levelFont = NULL;
 }
 
 Background::~Background() {
@@ -30,6 +31,8 @@ Background::~Background() {
 	pauseFont = NULL; 
 	TTF_CloseFont( startFont ); 
 	startFont = NULL; 
+	TTF_CloseFont( levelFont ); 
+	levelFont = NULL; 
 }
 
 
@@ -352,6 +355,26 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 		SDL_Color scoreColor = {16, 46, 106}; 
 		string scoreString = static_cast<ostringstream*>( &(ostringstream() << score) ) ->str();
 		ScoreTextTexture.loadFromRenderedText("Score: " + scoreString, scoreColor, gRenderer, scoreFont); 
+
+		//Display End Level Messages
+		if (levelFont == NULL)
+			levelFont = TTF_OpenFont("Aparajita.ttf", 20); 
+		if(levelFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+		} 
+		SDL_Color levelColor = {158, 131, 70}; 
+		Level1EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 1.", levelColor, gRenderer, levelFont);
+		Level2EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 2.", levelColor, gRenderer, levelFont);
+		Level3EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 3.", levelColor, gRenderer, levelFont);
+		Level4EndTextTexture.loadFromRenderedText("Congratulations! You have won Run ND!", levelColor, gRenderer, levelFont);
+		Level1BeginTextTexture_1.loadFromRenderedText("Welcome to Freshman Year!", levelColor, gRenderer, levelFont);
+		Level1BeginTextTexture_2.loadFromRenderedText("Better run to DomerFest!", levelColor, gRenderer, levelFont);
+		Level2BeginTextTexture_1.loadFromRenderedText("You are now a Sophomore...", levelColor, gRenderer, levelFont);
+		Level2BeginTextTexture_2.loadFromRenderedText("Time to hit the books at Club Hes!", levelColor, gRenderer, levelFont);
+		Level3BeginTextTexture_1.loadFromRenderedText("It's now Junior Year.", levelColor, gRenderer, levelFont);
+		Level3BeginTextTexture_2.loadFromRenderedText("Head over to pray you land that internship!", levelColor, gRenderer, levelFont);
+		Level4BeginTextTexture_1.loadFromRenderedText("Congratulations! You've made to Senior Year!", levelColor, gRenderer, levelFont);
+		Level4BeginTextTexture_2.loadFromRenderedText("Go climb the steps. You've earned it!", levelColor, gRenderer, levelFont);
 	} 
 }
 
@@ -372,6 +395,44 @@ void Background::displayLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, int frame, SD
 
 void Background::displayPause(SDL_Renderer* gRenderer) {
 	PauseTextTexture.render(125, 275, 0, gRenderer);
+}
+
+void Background::displayLevelEnd(SDL_Renderer* gRenderer, int level) {
+	switch (level) {
+		case 1:
+			Level1EndTextTexture.render(50, 50, 0, gRenderer);
+			break;
+		case 2:
+			Level2EndTextTexture.render(50, 50, 0, gRenderer);
+			break;
+		case 3:
+			Level3EndTextTexture.render(50, 50, 0, gRenderer);
+			break;
+		case 4:
+			Level4EndTextTexture.render(65, 50, 0, gRenderer);
+			break;
+	}
+}
+
+void Background::displayLevelBegin(SDL_Renderer* gRenderer, int level) {
+	switch (level) {
+		case 1:
+			Level1BeginTextTexture_1.render(50, 50, 0, gRenderer);
+			Level1BeginTextTexture_2.render(50, 75, 0, gRenderer);
+			break;
+		case 2:
+			Level2BeginTextTexture_1.render(50, 50, 0, gRenderer);
+			Level2BeginTextTexture_2.render(50, 75, 0, gRenderer);
+			break;
+		case 3:
+			Level3BeginTextTexture_1.render(50, 50, 0, gRenderer);
+			Level3BeginTextTexture_2.render(50, 75, 0, gRenderer);
+			break;
+		case 4:
+			Level4BeginTextTexture_1.render(50, 50, 0, gRenderer);
+			Level4BeginTextTexture_2.render(50, 75, 0, gRenderer);
+			break;
+	}
 }
 
 int Background::getFrameBack() {

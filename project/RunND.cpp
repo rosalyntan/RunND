@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 			int pause = 0;
 			int win = 0;
 			int level = 1;
-			int timelapse = 0;
+			int timelapse = 500;
 			//back -> loadLevel(gRenderer);
 			//While application is running
 			while(true) {
@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
 					if(SDL_PollEvent(&e)) {
 						int x = e.button.x;
 						int y = e.button.y;
-						if (e.button.button == SDL_BUTTON_LEFT && x>65 && x<335 && y>225 && y<375) {
+						if (e.button.button == SDL_BUTTON_LEFT && x>15 && x<385 && y>190 && y<410) {
 							start = true;
 						}
 					}
@@ -151,6 +151,15 @@ int main(int argc, char* argv[]) {
 					
 					// display beginning of level message
 					while (timelapse) {
+						SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+						SDL_Rect winBack = {15, 20, 370, 110};
+						SDL_RenderFillRect(gRenderer, &winBack);
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+						SDL_Rect winButton = {25, 30, 350, 90};
+						SDL_RenderFillRect(gRenderer, &winButton);
+						back -> displayLevelBegin(gRenderer, level);
+						SDL_SetRenderTarget(gRenderer, NULL);
+						SDL_RenderPresent(gRenderer);
 						timelapse--;
 					}
 
@@ -260,13 +269,14 @@ int main(int argc, char* argv[]) {
 						}
 						// end of level message
 						timelapse = 0;
-						while (timelapse < 50) {
+						while (timelapse < 500) {
 							SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
-							SDL_Rect winBack = {15, 190, 370, 220};
+							SDL_Rect winBack = {15, 20, 370, 110};
 							SDL_RenderFillRect(gRenderer, &winBack);
 							SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
-							SDL_Rect winButton = {25, 200, 350, 200};
+							SDL_Rect winButton = {25, 30, 350, 90};
 							SDL_RenderFillRect(gRenderer, &winButton);
+							back -> displayLevelEnd(gRenderer, level);
 							SDL_SetRenderTarget(gRenderer, NULL);
 							SDL_RenderPresent(gRenderer);
 							timelapse++;
@@ -274,6 +284,7 @@ int main(int argc, char* argv[]) {
 						win = 0;
 						score = 0;
 						level++;
+						beginning = 0;
 					}
 				}
 				cout << score << endl; // delete later

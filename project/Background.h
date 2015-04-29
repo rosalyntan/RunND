@@ -24,12 +24,15 @@ class Background {
 		void displayLevel(int, int, int, SDL_Renderer*);
 		void displayStart(SDL_Renderer*);
 		void displayPause(SDL_Renderer*); 
+		void displayLevelEnd(SDL_Renderer*, int); 
+		void displayLevelBegin(SDL_Renderer*, int); 
 		int getFrameBack();
 		void resetNumTurn();
 		SDL_Texture* getText();
 		TTF_Font* scoreFont; 
 		TTF_Font* startFont; 
 		TTF_Font* pauseFont;
+		TTF_Font* levelFont;
 	private:
 		int frameBack;
 		int dirTurn;
@@ -45,6 +48,18 @@ class Background {
 		LTexture ScoreTextTexture;
 		LTexture StartTextTexture;
 		LTexture PauseTextTexture;
+		LTexture Level1EndTextTexture;
+		LTexture Level2EndTextTexture;
+		LTexture Level3EndTextTexture;
+		LTexture Level4EndTextTexture;
+		LTexture Level1BeginTextTexture_1;
+		LTexture Level2BeginTextTexture_1;
+		LTexture Level3BeginTextTexture_1;
+		LTexture Level4BeginTextTexture_1;
+		LTexture Level1BeginTextTexture_2;
+		LTexture Level2BeginTextTexture_2;
+		LTexture Level3BeginTextTexture_2;
+		LTexture Level4BeginTextTexture_2;
 };
 
 #endif
