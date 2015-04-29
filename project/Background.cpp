@@ -227,7 +227,8 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 	else {
 
 		//Set pause font and text
-		pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
+		if (pauseFont == NULL)
+			pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
 		if(pauseFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 		} 
@@ -235,7 +236,8 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 		PauseTextTexture.loadFromRenderedText("PAUSE", pauseColor, gRenderer, pauseFont); 
 
 		//Display score 
-		scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
+		if(scoreFont == NULL)
+			scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(scoreFont == NULL) { 
 			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
 		} 
