@@ -135,6 +135,7 @@ int main(int argc, char* argv[]) {
 						SDL_Rect pauseBack = {90, 240, 220, 120};
 						SDL_RenderFillRect(gRenderer, &pauseBack);
 						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+						//SDL_Rect pauseIcon = {75, 235, 250, 130};
 						SDL_Rect pauseIcon = {100, 250, 200, 100};
 						SDL_RenderFillRect(gRenderer, &pauseIcon);
 						SDL_SetRenderTarget(gRenderer, NULL);
