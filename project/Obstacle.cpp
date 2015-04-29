@@ -6,7 +6,7 @@ using namespace std;
 
 // default constructor, also calls Object's constructor
 Obstacle::Obstacle() : Object() {
-	value = 5;
+	value = 2;
 }
 
 // is this necessary?
