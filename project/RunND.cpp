@@ -96,6 +96,8 @@ int main(int argc, char* argv[]) {
 					}
 				}
 				direction = 0;
+				level = 1;
+				timelapse = 500;
 				quit = false;
 				Coin* coinA = new Coin;
 				Coin* coinB = new Coin;
@@ -168,6 +170,7 @@ int main(int argc, char* argv[]) {
 						random = rand() % difficulty;
 						back -> turn(random, beginning);
 					}
+					if  (beginning < 50) { back -> turn(random, beginning); }
 					back -> frames();
 					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
@@ -281,6 +284,8 @@ int main(int argc, char* argv[]) {
 							SDL_RenderPresent(gRenderer);
 							timelapse++;
 						}
+						if (level == 4)
+							quit = true;
 						win = 0;
 						score = 0;
 						level++;

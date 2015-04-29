@@ -42,10 +42,11 @@ void Background::turn(int random, int beginning) { //use random number generated
 			frameBack = 1;
 			dirTurn = 2;
 			prev = random;
-			if (beginning < 50) {
+			if (beginning < 30) {
 				dirTurn = 1;
 				prev = 4;
 				frameBack = 0;
+				numTurn = 0;
 			}
 			break;
 		case 2: //turn left
@@ -56,6 +57,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 				dirTurn = 1;
 				prev = 4;
 				frameBack = 0;
+				numTurn = 0;
 			}	
 			break;
 		case 3: //turn right
@@ -66,6 +68,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 				dirTurn = 1;
 				prev = 4;
 				frameBack = 0;
+				numTurn = 0;
 			}
 			break;
 		default: //straight
@@ -117,7 +120,7 @@ void Background::frames() { //display turn frames based on turn() function
 		}
 	}
 	else if (dirTurn == 1) { //straight
-		currentClipBack = &gBackClips[frameBack];
+		currentClipBack = &gBackClips[0];
 		numTurn = 0;
 		dirTurn = 1;
 	}
