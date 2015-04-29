@@ -10,7 +10,6 @@ Obstacle::Obstacle(SDL_Renderer* gRenderer, SDL_Window* gWindow) : Object() {
 	value = 2;
 }
 
-// is this necessary?
 Obstacle::~Obstacle() {
 	squirrel.free();
 }
@@ -20,15 +19,15 @@ bool Obstacle::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	bool success = true;
 
 	//Load obstacle texture
-	if(!squirrel.loadFromFile("squirrel.jpg", gRenderer)) {
+	if(!squirrel.loadFromFile("squirrel.png", gRenderer)) {
 		cout << "Failed to load obstacle texture" << endl;
 		success = false;
 	}
 	else {
 		current.x = 0;
 		current.y = 0;
-		current.w = Object::getSize();
-		current.h = Object::getSize();
+		current.w = 30;
+		current.h = 50;
 	}
 	return success;
 }
