@@ -63,19 +63,33 @@ int main(int argc, char* argv[]) {
 				start = false;
 				score = 10;
 				while(!start) {
-					SDL_SetRenderTarget(gRenderer, back -> getText());
-					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
-					SDL_Rect startScreen = {0, 0, 400, 600};
-					SDL_RenderFillRect(gRenderer, &startScreen);
-					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x88, 0xFF, 0xFF);
-					SDL_Rect startButton = {100, 200, 200, 200};
+					//SDL_SetRenderTarget(gRenderer, back -> getText());
+					//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+					//SDL_Rect startScreen = {0, 0, 400, 600};
+					//SDL_RenderFillRect(gRenderer, &startScreen);
+					//random = rand() % 10;
+					if (back -> getNumTurn() == 0) {
+						random = rand() % 10;
+						back -> turn(random, beginning);
+					}
+					back -> frames();
+					back -> display(400, 600, score, gRenderer);
+					character -> frames();
+					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
+
+					// start button
+					SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+					SDL_Rect startBack = {65, 225, 270, 150};
+					SDL_RenderFillRect(gRenderer, &startBack);
+					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+					SDL_Rect startButton = {75, 235, 250, 130};
 					SDL_RenderFillRect(gRenderer, &startButton);
 					SDL_SetRenderTarget(gRenderer, NULL);
 					SDL_RenderPresent(gRenderer);
 					if(SDL_PollEvent(&e)) {
 						int x = e.button.x;
 						int y = e.button.y;
-						if (e.button.button == SDL_BUTTON_LEFT && x>100 && x<300 && y>200 && y<400) {
+						if (e.button.button == SDL_BUTTON_LEFT && x>65 && x<335 && y>225 && y<375) {
 							start = true;
 						}
 					}
@@ -83,6 +97,7 @@ int main(int argc, char* argv[]) {
 						return 0;
 					}
 				}
+				direction = 0;
 				quit = false;
 				Coin* coinA = new Coin;
 				Coin* coinB = new Coin;
