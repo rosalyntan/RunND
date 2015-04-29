@@ -254,6 +254,9 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 
 void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Renderer* gRenderer) { //render texture frame to window
 	gSpriteSheetTexture.render((SCREEN_WIDTH - currentClipBack->w)/2, (SCREEN_HEIGHT - currentClipBack->h)/2, currentClipBack, gRenderer); 
+//	SDL_Color scoreColor = {16, 46, 106}; 
+//	string scoreString = static_cast<ostringstream*>( &(ostringstream() << score) ) ->str();
+//	ScoreTextTexture.loadFromRenderedText("Score: " + scoreString, scoreColor, gRenderer, scoreFont); 
 	ScoreTextTexture.render(275, 0, 0, gRenderer);
 }
 

@@ -21,7 +21,7 @@ class Background {
 		void loadFont(SDL_Renderer*, int);
 		void display(int, int, int, SDL_Renderer*);
 		void displayLogo(SDL_Renderer*);
-		void displayPause(SDL_Renderer*); 
+		void displayPause(SDL_Renderer* gRenderer); 
 		int getFrameBack();
 		void resetNumTurn();
 		SDL_Texture* getText();
