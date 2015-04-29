@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 				quit = false;
 				Coin* coinA = new Coin;
 				Coin* coinB = new Coin;
-				Obstacle* obstacleA = new Obstacle;
+				Obstacle* obstacleA = new Obstacle(gRenderer, gWindow);
 				bool visibleCoinA = false;
 				bool visibleCoinB = false;
 				bool visibleObstacleA = false;
