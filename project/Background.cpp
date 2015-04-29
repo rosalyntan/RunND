@@ -73,7 +73,7 @@ void Background::turn(int random, int beginning) { //use random number generated
 }
 
 
-void Background::frames(int win) { //display turn frames based on turn() function
+void Background::frames() { //display turn frames based on turn() function
 	if (dirTurn == 2) { //both turns
 		if (numTurn < 16) {
 			currentClipBack = &gBackClips[frameBack/4 + 1];
@@ -118,16 +118,7 @@ void Background::frames(int win) { //display turn frames based on turn() functio
 		numTurn = 0;
 		dirTurn = 1;
 	}
-	else if (win == 1) {
-		currentClipBack = &LevelClips[frameBack/4 + 1];
-	}
 }
-
-
-void Background::framesLevel(int levelFrame) { //display turn frames based on turn() function
-	currentClipLevel = &LevelClips[levelFrame/4 + 1];
-}
-
 
 bool Background::lose(int userTurn) {
 	bool quit2 = false;
@@ -237,10 +228,10 @@ void Background::loadLogo(SDL_Renderer* gRenderer) {
 		cout << "Failed to load animation texture" << endl;
 }
 
-void Background::loadLevel(SDL_Renderer* gRenderer, int level) {
+void Background::loadLevel(SDL_Renderer* gRenderer) {
 
 	//Load level sprite sheet
-	if(!gSpriteSheetTexture.loadFromFile("EndGame_sprite.png", gRenderer)) {
+	if(!LevelTexture.loadFromFile("EndGame_sprite.png", gRenderer)) {
 		cout << "Failed to load animation texture" << endl;
 	}
 	else {
@@ -374,7 +365,8 @@ void Background::displayStart(SDL_Renderer* gRenderer) {
 	StartTextTexture.render(115, 350, 0, gRenderer);
 }
 
-void Background::displayLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
+void Background::displayLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, int frame, SDL_Renderer* gRenderer) { //render texture frame to window
+	currentClipLevel = &LevelClips[frame];
 	LevelTexture.render((SCREEN_WIDTH - currentClipLevel->w)/2, (SCREEN_HEIGHT - currentClipLevel->h)/2, currentClipLevel, gRenderer); 
 }
 

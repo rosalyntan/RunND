@@ -7,7 +7,7 @@ using namespace std;
 // default constructor, also calls Object's constructor
 Obstacle::Obstacle(SDL_Renderer* gRenderer, SDL_Window* gWindow) : Object(30, 50) {
 	loadMedia(gRenderer, gWindow);
-	value = 2;
+	value = 0;
 }
 
 Obstacle::~Obstacle() {

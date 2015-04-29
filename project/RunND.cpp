@@ -55,7 +55,8 @@ int main(int argc, char* argv[]) {
 			int pause = 0;
 			int win = 0;
 			int level = 1;
-
+			int timelapse = 0;
+			//back -> loadLevel(gRenderer);
 			//While application is running
 			while(true) {
 				int beginning = 0;
@@ -66,7 +67,7 @@ int main(int argc, char* argv[]) {
 						random = rand() % 10;
 						back -> turn(random, beginning);
 					}
-					back -> frames(win);
+					back -> frames();
 					back -> display(400, 600, score, gRenderer);
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
@@ -148,12 +149,17 @@ int main(int argc, char* argv[]) {
 						}
 					}
 					
+					// display beginning of level message
+					while (timelapse) {
+						timelapse--;
+					}
+
 					//calls to background function to display appropriate frames
 					if (back -> getNumTurn() == 0) {
 						random = rand() % difficulty;
 						back -> turn(random, beginning);
 					}
-					back -> frames(win);
+					back -> frames();
 					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
 						userTurn = 0;
@@ -233,25 +239,42 @@ int main(int argc, char* argv[]) {
 
 					if (score < 0) //can't have a negative score
 						quit = true;
-					else if (score == 10) //completes level after getting 100 points
+					else if (score >= 10) //completes level after getting 100 points
 						win = 1;
-
-					if (win == 1) {
-						int levelFrame = level;
-						for (int frame=0; frame <4; frame++) {
-							back -> loadLevel(gRenderer, levelFrame);
-							back -> framesLevel(levelFrame);
-							back -> displayLevel(400, 600, gRenderer);
-							levelFrame++;
-						}
-					}
-				
-					win = 0;
 
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
 
 					SDL_RenderPresent(gRenderer);
+					if(win) {	// end of each level
+						back -> loadLevel(gRenderer);
+						int currentFrame = level*4 - 4;
+						for (int i = 1; i < 16; i++) {
+							if (currentFrame<15) {
+								back -> displayLevel(SCREEN_WIDTH, SCREEN_HEIGHT, currentFrame, gRenderer);
+							}
+							if (i % 4 == 0) { currentFrame++; }
+							character -> frames();
+							direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
+							SDL_RenderPresent(gRenderer);
+						}
+						// end of level message
+						timelapse = 0;
+						while (timelapse < 50) {
+							SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+							SDL_Rect winBack = {15, 190, 370, 220};
+							SDL_RenderFillRect(gRenderer, &winBack);
+							SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+							SDL_Rect winButton = {25, 200, 350, 200};
+							SDL_RenderFillRect(gRenderer, &winButton);
+							SDL_SetRenderTarget(gRenderer, NULL);
+							SDL_RenderPresent(gRenderer);
+							timelapse++;
+						}
+						win = 0;
+						score = 0;
+						level++;
+					}
 				}
 				cout << score << endl; // delete later
 			}

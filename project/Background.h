@@ -13,16 +13,15 @@ class Background {
 		Background();
 		~Background();
 		void turn(int, int); //function replaces switch case that randomly generates turns
-		void frames(int); //determines what frames are shown depending on the results of turn() function
-		void framesLevel(int);
+		void frames(); //determines what frames are shown depending on the results of turn() function
 		bool lose(int);
 		int getNumTurn();
 		bool loadBackground(SDL_Renderer*, SDL_Window*);
 		void loadLogo(SDL_Renderer*);
-		void loadLevel(SDL_Renderer*, int);
+		void loadLevel(SDL_Renderer*); //
 		void loadFont(SDL_Renderer*, int);
 		void display(int, int, int, SDL_Renderer*);
-		void displayLevel(int, int, SDL_Renderer*);
+		void displayLevel(int, int, int, SDL_Renderer*);
 		void displayStart(SDL_Renderer*);
 		void displayPause(SDL_Renderer*); 
 		int getFrameBack();
@@ -37,12 +36,12 @@ class Background {
 		int numTurn;
 		int prev;
 		SDL_Rect* currentClipBack;
-		SDL_Rect* currentClipLevel;
+		SDL_Rect* currentClipLevel;	//
 		SDL_Rect gBackClips[13];
-		SDL_Rect LevelClips[15];
+		SDL_Rect LevelClips[15];	//
 		LTexture gSpriteSheetTexture;
 		LTexture LogoTexture;
-		LTexture LevelTexture;
+		LTexture LevelTexture;		//
 		LTexture ScoreTextTexture;
 		LTexture StartTextTexture;
 		LTexture PauseTextTexture;
