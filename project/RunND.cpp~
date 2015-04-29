@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
 					quit = (back -> lose(userTurn));
 					if (back -> getNumTurn()<10)
 						userTurn = 0;
-					back -> display(400, 600, gRenderer);
+					back -> display(400, 600, score, gRenderer);
 
 					//call coinA
 					if ((random < 5) && (back -> getFrameBack())%16==0 && !visibleCoinA) {
