@@ -240,6 +240,15 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 		SDL_Color pauseColor = {158, 131, 70}; 
 		PauseTextTexture.loadFromRenderedText("PAUSE", pauseColor, gRenderer, pauseFont); 
 
+		//Display start
+		if(startFont == NULL)
+			startFont = TTF_OpenFont("Aparajita.ttf", 40); 
+		if(startFont == NULL) { 
+			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+		} 
+		SDL_Color startColor = {158, 131, 70}; 
+		StartTextTexture.loadFromRenderedText("Click to Start", startColor, gRenderer, startFont);
+
 		//Display score 
 		if(scoreFont == NULL)
 			scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
@@ -257,8 +266,9 @@ void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Ren
 	ScoreTextTexture.render(275, 0, 0, gRenderer);
 }
 
-void Background::displayLogo(SDL_Renderer* gRenderer) {
-	LogoTexture.render(125, 275, 0, gRenderer);
+void Background::displayStart(SDL_Renderer* gRenderer) {
+	LogoTexture.render(50, 225, 0, gRenderer);
+	StartTextTexture.render(115, 350, 0, gRenderer);
 }
 
 void Background::displayPause(SDL_Renderer* gRenderer) {

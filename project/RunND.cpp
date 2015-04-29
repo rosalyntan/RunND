@@ -58,7 +58,6 @@ int main(int argc, char* argv[]) {
 
 			//While application is running
 			while(true) {
-			//	back -> loadFont(gRenderer, score);
 				int beginning = 0;
 				start = false;
 				score = 10;
@@ -72,15 +71,16 @@ int main(int argc, char* argv[]) {
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
 					back -> loadLogo(gRenderer);
+					back -> loadFont(gRenderer, score);
 
 					// start button
 					SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
-					SDL_Rect startBack = {65, 225, 270, 150};
+					SDL_Rect startBack = {15, 190, 370, 220};
 					SDL_RenderFillRect(gRenderer, &startBack);
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
-					SDL_Rect startButton = {75, 235, 250, 130};
+					SDL_Rect startButton = {25, 200, 350, 200};
 					SDL_RenderFillRect(gRenderer, &startButton);
-					back -> displayLogo(gRenderer);
+					back -> displayStart(gRenderer);
 					SDL_SetRenderTarget(gRenderer, NULL);
 					SDL_RenderPresent(gRenderer);
 					if(SDL_PollEvent(&e)) {
