@@ -17,7 +17,7 @@ Coin::~Coin() {
 // renders a yellow square to the game window
 void Coin::display(SDL_Renderer* gRenderer, SDL_Texture* background) {
 	SDL_SetRenderTarget(gRenderer, background);
-	SDL_Rect fillRect = {Object::getX(), Object::getY(), Object::getW(), Object::getH()};
+	SDL_Rect fillRect = {Object::getX(), Object::getY(), Object::getScale(), Object::getScale()};
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0x00, 0xFF);
 	SDL_RenderFillRect(gRenderer, &fillRect);
 }
