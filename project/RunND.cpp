@@ -39,14 +39,12 @@ int main(int argc, char* argv[]) {
 	}
 	else {
 		//Load media
-		if(!loadMedia() || !(back -> loadMedia(gRenderer, gWindow)) || !(character -> loadMedia(gRenderer, gWindow))) {
+		if(!loadMedia() || !(back -> loadBackground(gRenderer, gWindow)) || !(character -> loadMedia(gRenderer, gWindow))) {
 			cout << "Failed to load media." << endl;
 		}
 		else {
 			//Main loop flag
 			bool quit = false;
-
-			//back -> loadFont(gRenderer, score);
 
 			SDL_Event e; //Event handler
 			int direction = 0;
@@ -55,6 +53,8 @@ int main(int argc, char* argv[]) {
 			int difficulty = 50; //used with random number generator, can be decreased to make game harder
 			bool start = false;
 			int pause = 0;
+			int win = 0;
+			int level = 1;
 
 			//While application is running
 			while(true) {
@@ -233,6 +233,20 @@ int main(int argc, char* argv[]) {
 
 					if (score < 0) //can't have a negative score
 						quit = true;
+					else if (score == 10) //completes level after getting 100 points
+						win = 1;
+
+					if (win == 1) {
+						int levelFrame = level;
+						for (int frame=0; frame <4; frame++) {
+							back -> loadLevel(gRenderer, levelFrame);
+							back -> framesLevel(levelFrame);
+							back -> displayLevel(400, 600, gRenderer);
+							levelFrame++;
+						}
+					}
+				
+					win = 0;
 
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);

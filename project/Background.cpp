@@ -14,15 +14,22 @@ Background::Background() {
 	numTurn = 0;
 	scoreFont = NULL; 
 	pauseFont = NULL;
+	startFont = NULL;
 }
-
 
 Background::~Background() {
 	gSpriteSheetTexture.free(); 
+	LogoTexture.free();
+	LevelTexture.free();
+	ScoreTextTexture.free();
+	StartTextTexture.free();
+	PauseTextTexture.free();
 	TTF_CloseFont( scoreFont ); 
 	scoreFont = NULL; 
 	TTF_CloseFont( pauseFont ); 
 	pauseFont = NULL; 
+	TTF_CloseFont( startFont ); 
+	startFont = NULL; 
 }
 
 
@@ -114,6 +121,11 @@ void Background::frames() { //display turn frames based on turn() function
 }
 
 
+void Background::framesLevel(int levelFrame) { //display turn frames based on turn() function
+	currentClipLevel = &LevelClips[levelFrame/4 + 1];
+}
+
+
 bool Background::lose(int userTurn) {
 	bool quit2 = false;
 	if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0))
@@ -135,7 +147,7 @@ int Background::getNumTurn() {
 	return numTurn;
 }
 
-bool Background::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
+bool Background::loadBackground(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	//Loading success flag
 	bool success = true;
 
@@ -222,6 +234,94 @@ void Background::loadLogo(SDL_Renderer* gRenderer) {
 		cout << "Failed to load animation texture" << endl;
 }
 
+void Background::loadLevel(SDL_Renderer* gRenderer, int level) {
+
+	//Load level sprite sheet
+	if(!gSpriteSheetTexture.loadFromFile("EndGame_sprite.png", gRenderer)) {
+		cout << "Failed to load animation texture" << endl;
+	}
+	else {
+		//Stepan - Level 1
+		LevelClips[0].x = 0;
+		LevelClips[0].y = 0;
+		LevelClips[0].w = 400;
+		LevelClips[0].h = 600;
+
+		LevelClips[1].x = 400;
+		LevelClips[1].y = 0;
+		LevelClips[1].w = 400;
+		LevelClips[1].h = 600;
+
+		LevelClips[2].x = 800;
+		LevelClips[2].y = 0;
+		LevelClips[2].w = 400;
+		LevelClips[2].h = 600;
+
+		LevelClips[3].x = 1200;
+		LevelClips[3].y = 0;
+		LevelClips[3].w = 400;
+		LevelClips[3].h = 600;
+
+		//Library - Level 2
+		LevelClips[4].x = 0;
+		LevelClips[4].y = 600;
+		LevelClips[4].w = 400;
+		LevelClips[4].h = 600;
+
+		LevelClips[5].x = 400;
+		LevelClips[5].y = 600;
+		LevelClips[5].w = 400;
+		LevelClips[5].h = 600;
+
+		LevelClips[6].x = 800;
+		LevelClips[6].y = 600;
+		LevelClips[6].w = 400;
+		LevelClips[6].h = 600;
+
+		LevelClips[7].x = 1200;
+		LevelClips[7].y = 600;
+		LevelClips[7].w = 400;
+		LevelClips[7].h = 600;
+
+		//Grotto - Level 3
+		LevelClips[8].x = 0;
+		LevelClips[8].y = 1200;
+		LevelClips[8].w = 400;
+		LevelClips[8].h = 600;
+
+		LevelClips[9].x = 400;
+		LevelClips[9].y = 1200;
+		LevelClips[9].w = 400;
+		LevelClips[9].h = 600;
+
+		LevelClips[10].x = 800;
+		LevelClips[10].y = 1200;
+		LevelClips[10].w = 400;
+		LevelClips[10].h = 600;
+
+		LevelClips[11].x = 1200;
+		LevelClips[11].y = 1200;
+		LevelClips[11].w = 400;
+		LevelClips[11].h = 600;
+
+		//Dome (1-3) - Level 4
+		LevelClips[12].x = 1600;
+		LevelClips[12].y = 0;
+		LevelClips[12].w = 400;
+		LevelClips[12].h = 600;
+
+		LevelClips[13].x = 1600;
+		LevelClips[13].y = 600;
+		LevelClips[13].w = 400;
+		LevelClips[13].h = 600;
+
+		LevelClips[14].x = 1600;
+		LevelClips[14].y = 1200;
+		LevelClips[14].w = 400;
+		LevelClips[14].h = 600;
+	}
+}
+
 void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 	
 	//change printf to cout
@@ -269,6 +369,10 @@ void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Ren
 void Background::displayStart(SDL_Renderer* gRenderer) {
 	LogoTexture.render(50, 225, 0, gRenderer);
 	StartTextTexture.render(115, 350, 0, gRenderer);
+}
+
+void Background::displayLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer) { //render texture frame to window
+	LevelTexture.render((SCREEN_WIDTH - currentClipLevel->w)/2, (SCREEN_HEIGHT - currentClipLevel->h)/2, currentClipLevel, gRenderer); 
 }
 
 void Background::displayPause(SDL_Renderer* gRenderer) {
