@@ -26,6 +26,7 @@ void close();
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 LTexture* gTextTexture;
+LTexture* LogoTexture;
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
@@ -72,6 +73,10 @@ int main(int argc, char* argv[]) {
 					character -> frames();
 					direction = character -> display(SCREEN_WIDTH, SCREEN_HEIGHT, gRenderer, direction);
 
+					if(!LogoTexture.loadFromFile("RUN_ND.png", gRenderer)) {
+						cout << "Failed to load animation texture" << endl;
+					}
+
 					// start button
 					SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
 					SDL_Rect startBack = {65, 225, 270, 150};
@@ -79,6 +84,7 @@ int main(int argc, char* argv[]) {
 					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
 					SDL_Rect startButton = {75, 235, 250, 130};
 					SDL_RenderFillRect(gRenderer, &startButton);
+					LogoTexture.render(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, LogoTexture, gRenderer);
 					SDL_SetRenderTarget(gRenderer, NULL);
 					SDL_RenderPresent(gRenderer);
 					if(SDL_PollEvent(&e)) {
