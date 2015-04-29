@@ -5,10 +5,12 @@
 using namespace std;
 
 // default constructor
-Object::Object() {
-	setSize(15);
-	setX(200-size/2);
+Object::Object(int w, int h) {
+	setW(w);
+	setH(h);
+	setX(200-width/2);
 	setY(300);
+	setScale(15);
 	frame = 0;
 }
 
@@ -27,9 +29,17 @@ void Object::setX(int x) {
 	xPos = x;
 }
 
-// set size of object
-void Object::setSize(int s) {
-	size = s;
+// set width of object
+void Object::setW(int s) {
+	width = s;
+}
+
+void Object::setH(int s) {
+	height = s;
+}
+
+void Object::setScale(int s) {
+	scale = s;
 }
 
 // get functions
@@ -41,8 +51,16 @@ int Object::getY() {
 	return yPos;
 }
 
-int Object::getSize() {
-	return size;
+int Object::getW() {
+	return width;
+}
+
+int Object::getH() {
+	return height;
+}
+
+int Object::getScale() {
+	return scale;
 }
 
 // increments frames
@@ -50,13 +68,13 @@ int Object::getSize() {
 void Object::nextFrame() {
 	frame++;
 	if (frame%4 == 0) {
-		setSize(size*1.25);
-		setX(200-size/2);
-		setY(yPos+size*2);
+		setScale(scale*1.25);
+		setX(200-width/2);
+		setY(yPos+scale*2);
 	}
 	if  (frame>=16) {
-		setSize(15);
-		setX(200-size/2);
+		setScale(15);
+		setX(200-width/2);
 		setY(300);
 		frame = 0;	
 	}

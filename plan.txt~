@@ -1,21 +1,23 @@
 To Do List (as of 4/26/2015 11:30 PM):
 
 **T-instantiate obstacles/coins classes
--can jump over obstacles and coins and they don't count
--more coins (but still randomly generated)
--place randomly generated obstacles (around the same number as coins we have now): -5 points?
--count number of coins: +2
-F-display points
+**-can jump over obstacles and coins and they don't count
+XX-more coins (but still randomly generated)
+**-place randomly generated obstacles (around the same number as coins we have now): -5 points?
+**-count number of coins: +2
+**F-display points
 M-levels
 	1. go to domerfest (freshman)
 	2. go to the library (sophomore)
 	3. go to the grotto (junior)
 	4. go to the dome (senior/graduation)
--100 points to win a level
-F-text on start screen/winning level
+-Set upper limit to win a level and can't go into negative score
+**F-text on start screen
+-text for winning level
 **-start and end a level with a straight path
 **-remove all runner elements from RunND.cpp (things that are now in the runner class)
 **-clean LTexture.h
+**-colors for text
 
 
 
@@ -25,4 +27,6 @@ Extras:
 -fight song in the background
 -powerups
 -increase difficulty
+
+-DIE IF YOU TURN TOO EARLY?!?!
 
