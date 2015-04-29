@@ -292,7 +292,6 @@ int main(int argc, char* argv[]) {
 						beginning = 0;
 					}
 				}
-				cout << score << endl; // delete later
 			}
 		}
 	}
