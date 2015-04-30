@@ -56,7 +56,6 @@ int main(int argc, char* argv[]) {
 			int win = 0;
 			int level = 1;
 			int timelapse = 500;
-			//back -> loadLevel(gRenderer);
 			//While application is running
 			while(true) {
 				int beginning = 0;
@@ -75,10 +74,10 @@ int main(int argc, char* argv[]) {
 					back -> loadFont(gRenderer, score);
 
 					// start button
-					SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+					SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold border
 					SDL_Rect startBack = {15, 190, 370, 220};
 					SDL_RenderFillRect(gRenderer, &startBack);
-					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+					SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A); // navy blue
 					SDL_Rect startButton = {25, 200, 350, 200};
 					SDL_RenderFillRect(gRenderer, &startButton);
 					back -> displayStart(gRenderer);
@@ -134,10 +133,10 @@ int main(int argc, char* argv[]) {
 					// pause game when space bar is pressed
 					while (pause) {
 						// create pause icon (a rectangle that says pause)
-						SDL_SetRenderDrawColor(gRenderer, 0x9E, 0x83, 0x46, 0x00); //gold box
+						SDL_SetRenderDrawColor(gRenderer, 0x9E, 0x83, 0x46, 0x00); //gold border
 						SDL_Rect pauseBack = {90, 240, 220, 120};
 						SDL_RenderFillRect(gRenderer, &pauseBack);
-						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A); // navy blue
 						SDL_Rect pauseIcon = {100, 250, 200, 100};
 						SDL_RenderFillRect(gRenderer, &pauseIcon);
 						SDL_SetRenderTarget(gRenderer, NULL);
@@ -153,10 +152,10 @@ int main(int argc, char* argv[]) {
 					
 					// display beginning of level message
 					while (timelapse) {
-						SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+						SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold border
 						SDL_Rect winBack = {15, 20, 370, 110};
 						SDL_RenderFillRect(gRenderer, &winBack);
-						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+						SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A); // navy blue
 						SDL_Rect winButton = {25, 30, 350, 90};
 						SDL_RenderFillRect(gRenderer, &winButton);
 						back -> displayLevelBegin(gRenderer, level);
@@ -179,7 +178,6 @@ int main(int argc, char* argv[]) {
 
 					//call coinA
 					if ((random < 5) && (back -> getFrameBack())%16==0 && !visibleCoinA) {
-						//Object * coin = new Object;
 						visibleCoinA = true;
 					}
 					if (visibleCoinA) {
@@ -189,7 +187,6 @@ int main(int argc, char* argv[]) {
 							if(coinA -> getFrame() == 12)
 								score = coinA -> effect(score); // get it to only increment once 
 							else if (coinA -> getFrame() >= 15) {
-								//delete a;
 								visibleCoinA = false;
 							}
 						}
@@ -204,7 +201,6 @@ int main(int argc, char* argv[]) {
 					}
 					//call coinB
 					if ((random > 45) && (back -> getFrameBack())%16==0 && !visibleCoinB) {
-						//Object * coin = new Object;
 						visibleCoinB = true;
 					}
 					if (visibleCoinB) {
@@ -213,7 +209,6 @@ int main(int argc, char* argv[]) {
 							if(coinB -> getFrame() == 12)
 								score = coinB -> effect(score);
 							else if (coinB -> getFrame() >= 15) {
-								//delete a;
 								visibleCoinB = false;
 							}
 						}
@@ -251,7 +246,7 @@ int main(int argc, char* argv[]) {
 
 					if (score < 0) //can't have a negative score
 						quit = true;
-					else if (score >= 25) //completes level after getting 100 points
+					else if (score >= 25) //completes level after getting 25 points
 						win = 1;
 
 					character -> frames();
@@ -273,10 +268,10 @@ int main(int argc, char* argv[]) {
 						// end of level message
 						timelapse = 0;
 						while (timelapse < 500) {
-							SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold
+							SDL_SetRenderDrawColor(gRenderer,0x9E, 0x83, 0x46, 0x00); // gold border
 							SDL_Rect winBack = {15, 20, 370, 110};
 							SDL_RenderFillRect(gRenderer, &winBack);
-							SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A);
+							SDL_SetRenderDrawColor(gRenderer, 0x00, 0x10, 0x2E, 0x6A); // navy blue
 							SDL_Rect winButton = {25, 30, 350, 90};
 							SDL_RenderFillRect(gRenderer, &winButton);
 							back -> displayLevelEnd(gRenderer, level);
