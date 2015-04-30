@@ -9,19 +9,19 @@
 #include "LTexture.h"
 using namespace std;
 
-class Runner{
+class Runner {
 	public:
 		Runner();
 		~Runner();
 		bool loadMedia(SDL_Renderer*, SDL_Window*);
-		void frames();
+		void frames();		// iterates through runner animation
 		int display(int, int, SDL_Renderer*, int);
 	private:
-	 	int frameChar;
-		int jump;
+	 	int frameChar;		// current frame # of character, from 0-15
+		int jump;		// jump variable
 		SDL_Rect gCharClips[4];
-		SDL_Rect* currentClipChar;
-		LTexture gCharacterTexture;
+		SDL_Rect* currentClipChar;	// section of image being render
+		LTexture gCharacterTexture;	// character sprite sheet
 };
 
 #endif
