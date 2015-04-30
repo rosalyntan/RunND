@@ -46,26 +46,26 @@ bool Runner::loadMedia(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	return success;
 }
 
-void Runner::frames() {
-	++frameChar;
+void Runner::frames() {	
+	++frameChar;		// increment frameChar
 	if(frameChar/4 >= 4) {
-		frameChar = 0;
+		frameChar = 0;	// loop back to first frame 
 	}
 }
 
 //originally a void function, returns direction now because direction needs to update in main also
 int Runner::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Renderer* gRenderer, int direction) {
-	currentClipChar = &gCharClips[frameChar / 4];
-	if (direction == 1) {						
-		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+	currentClipChar = &gCharClips[frameChar / 4];	// assign current frame based on frameChar (each sprite stays up for 4 frames to get good animation tempo)
+	if (direction == 1) {	// if jumping					
+		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 12*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);	// render sprite in jumping location
 		jump++;
-		if (jump > 4) {
+		if (jump > 4) {		// jumps for 4 frame
 			direction = 0;
 			jump = 0;
 		}
 	}
 	else
-		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);
+		gCharacterTexture.render((SCREEN_WIDTH - currentClipChar->w)/2, 14*(SCREEN_HEIGHT - currentClipChar->h)/15, currentClipChar, gRenderer);	// render sprite in running location
 	return direction;
 }
 
