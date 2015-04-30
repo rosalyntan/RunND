@@ -34,5 +34,7 @@ $(FUNC4).o: $(FUNC4).cpp
 $(FUNC5).o: $(FUNC5).cpp
 	$(CMP) -c $(FUNC5).cpp $(FLAGS)
 
+.PHONY: clean
+
 clean:
 	-rm *.o $(MAIN) *~
