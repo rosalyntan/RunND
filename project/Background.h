@@ -16,11 +16,11 @@ class Background {
 		void frames(); //determines what frames are shown depending on the results of turn() function
 		bool lose(int);
 		int getNumTurn();
-		bool loadBackground(SDL_Renderer*, SDL_Window*);
+		bool loadBackground(SDL_Renderer*, SDL_Window*);	//Load different forms of media
 		void loadLogo(SDL_Renderer*);
-		void loadLevel(SDL_Renderer*); //
+		void loadLevel(SDL_Renderer*); 
 		void loadFont(SDL_Renderer*, int);
-		void display(int, int, int, SDL_Renderer*);
+		void display(int, int, int, SDL_Renderer*);		//Display functions
 		void displayLevel(int, int, int, SDL_Renderer*);
 		void displayStart(SDL_Renderer*);
 		void displayPause(SDL_Renderer*); 
@@ -29,7 +29,7 @@ class Background {
 		int getFrameBack();
 		void resetNumTurn();
 		SDL_Texture* getText();
-		TTF_Font* scoreFont; 
+		TTF_Font* scoreFont; 	//fonts/sizes for each kind of text
 		TTF_Font* startFont; 
 		TTF_Font* pauseFont;
 		TTF_Font* levelFont;
@@ -39,21 +39,21 @@ class Background {
 		int numTurn;
 		int prev;
 		SDL_Rect* currentClipBack;
-		SDL_Rect* currentClipLevel;	//
+		SDL_Rect* currentClipLevel;	
 		SDL_Rect gBackClips[13];
-		SDL_Rect LevelClips[15];	//
+		SDL_Rect LevelClips[15];	
 		LTexture gSpriteSheetTexture;
 		LTexture LogoTexture;
-		LTexture LevelTexture;		//
-		LTexture ScoreTextTexture;
+		LTexture LevelTexture;		
+		LTexture ScoreTextTexture;	//Text Displays
 		LTexture StartTextTexture;
 		LTexture PauseTextTexture;
-		LTexture Level1EndTextTexture;
+		LTexture Level1EndTextTexture;	//End of level text displays
 		LTexture Level2EndTextTexture;
 		LTexture Level3EndTextTexture;
 		LTexture Level4EndTextTexture;
-		LTexture Level1BeginTextTexture_1;
-		LTexture Level2BeginTextTexture_1;
+		LTexture Level1BeginTextTexture_1;	//Beginning of level text displays
+		LTexture Level2BeginTextTexture_1;	//_1 and _2 indicate line 1 or line 2 of the text
 		LTexture Level3BeginTextTexture_1;
 		LTexture Level4BeginTextTexture_1;
 		LTexture Level1BeginTextTexture_2;

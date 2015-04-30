@@ -18,7 +18,7 @@ Background::Background() {
 	levelFont = NULL;
 }
 
-Background::~Background() {
+Background::~Background() { 	//free all textures and fonts
 	gSpriteSheetTexture.free(); 
 	LogoTexture.free();
 	LevelTexture.free();
@@ -82,12 +82,12 @@ void Background::turn(int random, int beginning) { //use random number generated
 void Background::frames() { //display turn frames based on turn() function
 	if (dirTurn == 2) { //both turns
 		if (numTurn < 16) {
-			currentClipBack = &gBackClips[frameBack/4 + 1];
+			currentClipBack = &gBackClips[frameBack/4 + 1]; //gBackClips[1-4]
 			++numTurn;
 			dirTurn = 2;
 			++frameBack;
 		}
-		if(frameBack >= 16) {
+		if(frameBack >= 16) { //after all frames have been displayed, return to straight
 			frameBack = 0;
 			numTurn = 0;
 			dirTurn=1;
@@ -95,12 +95,12 @@ void Background::frames() { //display turn frames based on turn() function
 	}
 	else if (dirTurn == 3) { //left turn
 		if (numTurn < 16) {
-			currentClipBack = &gBackClips[frameBack/4 + 1];
+			currentClipBack = &gBackClips[frameBack/4 + 1]; //gBackClips[5-8]
 			++numTurn;
 			dirTurn = 3;
 			++frameBack;
 		}
-		if(frameBack >= 32) {
+		if(frameBack >= 32) { //return to straight
 			frameBack = 0;
 			numTurn = 0;
 			dirTurn=1;
@@ -108,18 +108,18 @@ void Background::frames() { //display turn frames based on turn() function
 	}
 	else if (dirTurn == 4) { //right turn
 		if (numTurn < 16) {
-			currentClipBack = &gBackClips[frameBack/4 + 1];
+			currentClipBack = &gBackClips[frameBack/4 + 1]; //gBackClips[9-12]
 			++numTurn;
 			dirTurn = 4;
 			++frameBack;
 		}
-		if(frameBack >= 48) {
+		if(frameBack >= 48) { //return to straight
 			frameBack = 0;
 			numTurn = 0;
 			dirTurn=1;
 		}
 	}
-	else if (dirTurn == 1) { //straight
+	else if (dirTurn == 1) { //straight -- default
 		currentClipBack = &gBackClips[0];
 		numTurn = 0;
 		dirTurn = 1;
@@ -128,12 +128,12 @@ void Background::frames() { //display turn frames based on turn() function
 
 bool Background::lose(int userTurn) {
 	bool quit2 = false;
-	if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0))
+	if ((numTurn == 14) && (dirTurn == 2) && (userTurn==0)) //if both turns appear and the user doesn't press right/left key, loses game
 		quit2 = true;	
-	else if ((numTurn == 15) && (userTurn != dirTurn))
+	else if ((numTurn == 15) && (userTurn != dirTurn)) //if right/left turn appears and user doesn't enter matching direction, lose game
 		quit2 = true;
 
-	if (quit2) {
+	if (quit2) {	//reset variables on quit
 		frameBack = 0;
 		dirTurn = 1;
 		prev = 0;
@@ -205,7 +205,7 @@ bool Background::loadBackground(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 		gBackClips[8].w = 400;
 		gBackClips[8].h = 600;
 
-		//left turn
+		//right turn
 		gBackClips[9].x = 400;
 		gBackClips[9].y = 1200;
 		gBackClips[9].w = 400;
@@ -229,12 +229,12 @@ bool Background::loadBackground(SDL_Renderer* gRenderer, SDL_Window* gWindow) {
 	return success;
 }
 
-void Background::loadLogo(SDL_Renderer* gRenderer) {
+void Background::loadLogo(SDL_Renderer* gRenderer) { //RunND logo for start screen
 	if(!LogoTexture.loadFromFile("RUN_ND.png", gRenderer))
 		cout << "Failed to load animation texture" << endl;
 }
 
-void Background::loadLevel(SDL_Renderer* gRenderer) {
+void Background::loadLevel(SDL_Renderer* gRenderer) { //end of level sprites
 
 	//Load level sprite sheet
 	if(!LevelTexture.loadFromFile("EndGame_sprite.png", gRenderer)) {
@@ -322,12 +322,11 @@ void Background::loadLevel(SDL_Renderer* gRenderer) {
 	}
 }
 
-void Background::loadFont(SDL_Renderer* gRenderer, int score) {
+void Background::loadFont(SDL_Renderer* gRenderer, int score) { //initialize font for all text textures
 	
-	//change printf to cout
 	//Initialize Font
 	if(TTF_Init() == -1) { 
-		printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError()); 
+		cout << "SDL_ttf could not initialize. SDL_ttf Error: "<< TTF_GetError() << endl; 
 	}
 	else {
 
@@ -335,42 +334,42 @@ void Background::loadFont(SDL_Renderer* gRenderer, int score) {
 		if (pauseFont == NULL)
 			pauseFont = TTF_OpenFont("Aparajita.ttf", 60); 
 		if(pauseFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+			cout << "Failed to load font. SDL_ttf Error: " << TTF_GetError() << endl; 
 		} 
 		SDL_Color pauseColor = {158, 131, 70}; 
 		PauseTextTexture.loadFromRenderedText("PAUSE", pauseColor, gRenderer, pauseFont); 
 
-		//Display start
+		//start screen font
 		if(startFont == NULL)
 			startFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(startFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+			cout << "Failed to load font. SDL_ttf Error: " << TTF_GetError() << endl; 
 		} 
 		SDL_Color startColor = {158, 131, 70}; 
 		StartTextTexture.loadFromRenderedText("Click to Start", startColor, gRenderer, startFont);
 
-		//Display score 
+		//score display font
 		if(scoreFont == NULL)
 			scoreFont = TTF_OpenFont("Aparajita.ttf", 40); 
 		if(scoreFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+			cout << "Failed to load font. SDL_ttf Error: " << TTF_GetError() << endl; 
 		} 
 		SDL_Color scoreColor = {16, 46, 106}; 
 		string scoreString = static_cast<ostringstream*>( &(ostringstream() << score) ) ->str();
 		ScoreTextTexture.loadFromRenderedText("Score: " + scoreString, scoreColor, gRenderer, scoreFont); 
 
-		//Display End Level Messages
+		//font for Begin/End Level Messages
 		if (levelFont == NULL)
 			levelFont = TTF_OpenFont("Aparajita.ttf", 20); 
 		if(levelFont == NULL) { 
-			printf("Failed to load font. SDL_ttf Error: %s\n", TTF_GetError()); 
+			cout << "Failed to load font. SDL_ttf Error: " << TTF_GetError() << endl; 
 		} 
 		SDL_Color levelColor = {158, 131, 70}; 
-		Level1EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 1.", levelColor, gRenderer, levelFont);
+		Level1EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 1.", levelColor, gRenderer, levelFont); 	//end level outputs
 		Level2EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 2.", levelColor, gRenderer, levelFont);
 		Level3EndTextTexture.loadFromRenderedText("Congratulations! You have completed Level 3.", levelColor, gRenderer, levelFont);
 		Level4EndTextTexture.loadFromRenderedText("Congratulations! You have won Run ND!", levelColor, gRenderer, levelFont);
-		Level1BeginTextTexture_1.loadFromRenderedText("Welcome to Freshman Year!", levelColor, gRenderer, levelFont);
+		Level1BeginTextTexture_1.loadFromRenderedText("Welcome to Freshman Year!", levelColor, gRenderer, levelFont);			//beginning of level outputs
 		Level1BeginTextTexture_2.loadFromRenderedText("Better run to DomerFest!", levelColor, gRenderer, levelFont);
 		Level2BeginTextTexture_1.loadFromRenderedText("You are now a Sophomore...", levelColor, gRenderer, levelFont);
 		Level2BeginTextTexture_2.loadFromRenderedText("Time to hit the books at Club Hes!", levelColor, gRenderer, levelFont);
@@ -386,7 +385,7 @@ void Background::display(int SCREEN_WIDTH, int SCREEN_HEIGHT, int score, SDL_Ren
 	ScoreTextTexture.render(255, 0, 0, gRenderer);
 }
 
-void Background::displayStart(SDL_Renderer* gRenderer) {
+void Background::displayStart(SDL_Renderer* gRenderer) { //start screen text and logo
 	LogoTexture.render(50, 225, 0, gRenderer);
 	StartTextTexture.render(115, 350, 0, gRenderer);
 }
@@ -396,11 +395,11 @@ void Background::displayLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, int frame, SD
 	LevelTexture.render((SCREEN_WIDTH - currentClipLevel->w)/2, (SCREEN_HEIGHT - currentClipLevel->h)/2, currentClipLevel, gRenderer); 
 }
 
-void Background::displayPause(SDL_Renderer* gRenderer) {
+void Background::displayPause(SDL_Renderer* gRenderer) { //pause text 
 	PauseTextTexture.render(125, 275, 0, gRenderer);
 }
 
-void Background::displayLevelEnd(SDL_Renderer* gRenderer, int level) {
+void Background::displayLevelEnd(SDL_Renderer* gRenderer, int level) {  //display end of level messages dependent on level user is currently on
 	switch (level) {
 		case 1:
 			Level1EndTextTexture.render(50, 50, 0, gRenderer);
@@ -417,7 +416,7 @@ void Background::displayLevelEnd(SDL_Renderer* gRenderer, int level) {
 	}
 }
 
-void Background::displayLevelBegin(SDL_Renderer* gRenderer, int level) {
+void Background::displayLevelBegin(SDL_Renderer* gRenderer, int level) {  //display beginning of level messages dependent on level user is on
 	switch (level) {
 		case 1:
 			Level1BeginTextTexture_1.render(50, 50, 0, gRenderer);
